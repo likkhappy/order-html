@@ -1,0 +1,323 @@
+<html data-dpr="1" style="font-size: 37.5px;">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge chrome=1">
+  <meta name="renderer" content="webkit">
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1">
+  <meta content="telephone=no" name="format-detection">
+  <title>order</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/footer.css">
+  <link rel="stylesheet" href="../css/navigator.css">
+  <link rel="stylesheet" href="../css/modal.css">
+
+  <script>
+    ;
+    (function(win, lib) {
+      var doc = win.document;
+      var docEl = doc.documentElement;
+      var metaEl = doc.querySelector('meta[name="viewport"]');
+      var flexibleEl = doc.querySelector('meta[name="flexible"]');
+      var dpr = 0;
+      var scale = 0;
+      var tid;
+      var flexible = lib.flexible || (lib.flexible = {});
+
+      if (metaEl) {
+        console.warn('将根据已有的meta标签来设置缩放比例');
+        var match = metaEl.getAttribute('content').match(/initial\-scale=([\d\.]+)/);
+        if (match) {
+          scale = parseFloat(match[1]);
+          dpr = parseInt(1 / scale);
+        }
+      } else if (flexibleEl) {
+        var content = flexibleEl.getAttribute('content');
+        if (content) {
+          var initialDpr = content.match(/initial\-dpr=([\d\.]+)/);
+          var maximumDpr = content.match(/maximum\-dpr=([\d\.]+)/);
+          if (initialDpr) {
+            dpr = parseFloat(initialDpr[1]);
+            scale = parseFloat((1 / dpr).toFixed(2));
+          }
+          if (maximumDpr) {
+            dpr = parseFloat(maximumDpr[1]);
+            scale = parseFloat((1 / dpr).toFixed(2));
+          }
+        }
+      }
+
+      if (!dpr && !scale) {
+        var isAndroid = win.navigator.appVersion.match(/android/gi);
+        var isIPhone = win.navigator.appVersion.match(/iphone/gi);
+        var devicePixelRatio = win.devicePixelRatio;
+        if (isIPhone) {
+          // iOS下，对于2和3的屏，用2倍的方案，其余的用1倍方案
+          if (devicePixelRatio >= 3 && (!dpr || dpr >= 3)) {
+            dpr = 3;
+          } else if (devicePixelRatio >= 2 && (!dpr || dpr >= 2)) {
+            dpr = 2;
+          } else {
+            dpr = 1;
+          }
+        } else {
+          // 其他设备下，仍旧使用1倍的方案
+          dpr = 1;
+        }
+        scale = 1 / dpr;
+      }
+
+      docEl.setAttribute('data-dpr', dpr);
+      if (!metaEl) {
+        metaEl = doc.createElement('meta');
+        metaEl.setAttribute('name', 'viewport');
+        metaEl.setAttribute('content', 'initial-scale=' + scale + ', maximum-scale=' + scale + ', minimum-scale=' + scale + ', user-scalable=no');
+        if (docEl.firstElementChild) {
+          docEl.firstElementChild.appendChild(metaEl);
+        } else {
+          var wrap = doc.createElement('div');
+          wrap.appendChild(metaEl);
+          doc.write(wrap.innerHTML);
+        }
+      }
+
+      function refreshRem() {
+        var width = docEl.getBoundingClientRect().width;
+        if (width / dpr > 540) {
+          width = 540 * dpr;
+        }
+        var rem = width / 10;
+        docEl.style.fontSize = rem + 'px';
+        flexible.rem = win.rem = rem;
+      }
+
+      win.addEventListener('resize', function() {
+        clearTimeout(tid);
+        tid = setTimeout(refreshRem, 300);
+      }, false);
+      win.addEventListener('pageshow', function(e) {
+        if (e.persisted) {
+          clearTimeout(tid);
+          tid = setTimeout(refreshRem, 300);
+        }
+      }, false);
+
+      if (doc.readyState === 'complete') {
+        doc.body.style.fontSize = 12 * dpr + 'px';
+      } else {
+        doc.addEventListener('DOMContentLoaded', function(e) {
+          doc.body.style.fontSize = 12 * dpr + 'px';
+        }, false);
+      }
+
+
+      refreshRem();
+
+      flexible.dpr = win.dpr = dpr;
+      flexible.refreshRem = refreshRem;
+      flexible.rem2px = function(d) {
+        var val = parseFloat(d) * this.rem;
+        if (typeof d === 'string' && d.match(/rem$/)) {
+          val += 'px';
+        }
+        return val;
+      }
+      flexible.px2rem = function(d) {
+        var val = parseFloat(d) / this.rem;
+        if (typeof d === 'string' && d.match(/px$/)) {
+          val += 'rem';
+        }
+        return val;
+      }
+
+    })(window, window['lib'] || (window['lib'] = {}));
+  </script>
+
+  <style type="text/css">
+    .recommend-page {
+      background-color: #f8f8f8;
+    }
+
+    .recommend-page .r-wrap {
+      background: #fff;
+      padding-left: 0.53333rem;
+      width: 100%;
+      height: 1.28rem;
+      line-height: 1.28rem;
+      font-size: 0.34667rem;
+    }
+
+    .recommend-page .r-bus {
+      color: #01b76d;
+    }
+
+    .recommend-page .r-bus:before {
+      color: #666;
+      content: '\63A8\8350';
+    }
+
+    .recommend-page .r-bus::after {
+      color: #666;
+      content: '\7D2F\8BA1\5956\52B1';
+    }
+
+    .recommend-page .r-mon {
+      float: right;
+      padding-right: 1.86667rem;
+      color: #f30;
+    }
+
+    .recommend-page .r-mon::after {
+      color: #666;
+      content: '\5143';
+    }
+
+    .recommend-page .next {
+      position: absolute;
+      float: right;
+      right: 0.26667rem;
+      text-decoration: none;
+      font-size: 0.48rem;
+      font-weight: bold;
+      color: #01b76d;
+    }
+
+    .recommend-page .showb {
+      border-bottom: 1px solid #f9f9f9;
+    }
+
+    .recommend-page .m-title {
+      background-color: #ebfff6;
+      margin-top: 0.26667rem;
+      padding: 0;
+      text-align: center;
+      font-size: 0.37333rem;
+      color: #01b76d;
+    }
+
+    .recommend-page .m-con {
+      background: #fff;
+      width: 100%;
+      height: 3.2rem;
+      color: #999;
+    }
+
+    .recommend-page .m-con .con-l {
+      float: left;
+      width: 3.2rem;
+      height: 100%;
+      text-align: center;
+      font-size: 0.37333rem;
+      line-height: 3.2rem;
+    }
+
+    .recommend-page .m-con .r-title {
+      display: block;
+      line-height: 1.06667rem;
+      font-size: 0.42667rem;
+      color: #f30;
+      text-align: center;
+    }
+
+    .recommend-page .m-con .con-r {
+      font-size: 0.34667rem;
+    }
+
+    .recommend-page .m-wrap {
+      background: #fff;
+    }
+
+    .recommend-page .fun-title {
+      padding-left: 0.8rem;
+      line-height: 1.6rem;
+      color: #999;
+    }
+
+    .recommend-page .cord {
+      display: block;
+      margin: 0 auto;
+      width: 4.61333rem;
+      height: 4.61333rem;
+    }
+
+    .recommend-page .fun-wrap {
+      padding: 0 0 1.2rem 0.8rem;
+    }
+
+    .recommend-page .small-input {
+      background-color: #f8f8f8;
+      padding-left: 0.8rem;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      padding-left: 0.13333rem;
+      width: 65%;
+      height: 1.01333rem;
+      color: #999;
+    }
+
+    .recommend-page .small-btn {
+      display: inline-block;
+      background: #01b76d;
+      border-radius: 0.13333rem;
+      margin-left: 0.26667rem;
+      width: 1.86667rem;
+      height: 1.01333rem;
+      line-height: 1.01333rem;
+      font-size: 0.37333rem;
+      text-align: center;
+      color: #fff;
+    }
+  </style>
+</head>
+
+<body style="font-size: 12px;">
+  <div>
+    <div id="app" class="page-content">
+      <section class="banner"><img src="../img/apptopmstj.png" class="bar-img"></section>
+      <section class="recommend-page page-content">
+        <section class="navigator second">
+          <span class="iconfont icon">&#xe701;</span>
+          <span class="title">推荐有奖</span>
+        </section>
+        <div class="r-wrap showb">
+          <span class="r-bus">商家</span>
+          <span class="r-mon">0</span>
+          <a href="/person/seller-reward" class="iconfont next">&#xe700;</a>
+        </div>
+        <div class="r-wrap">
+          <span class="r-bus">买手</span>
+          <span class="r-mon">0</span>
+          <a href="/person/buyer-reward" class="iconfont next">&#xe700;</a>
+        </div>
+        <div class="m-wrap">
+          <div class="r-wrap m-title">奖励规则</div>
+          <div class="m-con showb">
+            <div class="con-l">推荐商家</div>
+            <div class="con-r"><span class="r-title">￥10+3%</span> 推荐商家注册，他完成第一单任务，你就能获取￥10佣金作为奖励哦；以后他每发布一单任务并完成佣金支付， 你都能获取3%佣金作为奖励哦，一年内有效。
+            </div>
+          </div>
+          <div class="m-con">
+            <div class="con-l">推荐买手</div>
+            <div class="con-r"><span class="r-title">￥5 + 5%</span> 推荐商家注册，他完成第一单任务，你就能获取￥10佣金作为奖励哦；以后他每发布一单任务并完成佣金支付， 你都能获取3%佣金作为奖励哦，一年内有效。
+            </div>
+          </div>
+        </div>
+        <div class="m-wrap">
+          <div class="r-wrap m-title">推荐方法</div>
+          <div class="fun-title">方法一：下载二维码到手机，并发给好友</div>
+          <div class="fun-con"><img src="../img/cord.png" class="cord"></div>
+          <div class="fun-title">方法二：复制下面推荐链接，并发送给好友</div>
+          <div class="fun-wrap"><input readonly="readonly" type="text" value="http://m.chongshouye.com/f/56327" class="small-input">
+            <div class="small-btn">复制</div>
+          </div>
+        </div>
+      </section>
+      <section class="footer"><a href="/home" class="item"><span class="text home iconfont">首页</span></a> <a href="/task" class="item"><span class="text task iconfont">任务</span></a> <a href="/person" class="item router-link-active"><span class="text my iconfont">我的</span></a></section>
+    </div>
+  </div>
+  <!-- built files will be auto injected -->
+
+
+</body>
+
+</html>

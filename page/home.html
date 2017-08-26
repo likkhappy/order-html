@@ -1,0 +1,423 @@
+<html data-dpr="1" style="font-size: 37.5px;">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge chrome=1">
+  <meta name="renderer" content="webkit">
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1">
+  <meta content="telephone=no" name="format-detection">
+  <title>order</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/footer.css">
+  <link rel="stylesheet" href="../css/navigator.css">
+  <link rel="stylesheet" href="../css/modal.css">
+  <script>
+    ;
+    (function(win, lib) {
+      var doc = win.document;
+      var docEl = doc.documentElement;
+      var metaEl = doc.querySelector('meta[name="viewport"]');
+      var flexibleEl = doc.querySelector('meta[name="flexible"]');
+      var dpr = 0;
+      var scale = 0;
+      var tid;
+      var flexible = lib.flexible || (lib.flexible = {});
+
+      if (metaEl) {
+        console.warn('将根据已有的meta标签来设置缩放比例');
+        var match = metaEl.getAttribute('content').match(/initial\-scale=([\d\.]+)/);
+        if (match) {
+          scale = parseFloat(match[1]);
+          dpr = parseInt(1 / scale);
+        }
+      } else if (flexibleEl) {
+        var content = flexibleEl.getAttribute('content');
+        if (content) {
+          var initialDpr = content.match(/initial\-dpr=([\d\.]+)/);
+          var maximumDpr = content.match(/maximum\-dpr=([\d\.]+)/);
+          if (initialDpr) {
+            dpr = parseFloat(initialDpr[1]);
+            scale = parseFloat((1 / dpr).toFixed(2));
+          }
+          if (maximumDpr) {
+            dpr = parseFloat(maximumDpr[1]);
+            scale = parseFloat((1 / dpr).toFixed(2));
+          }
+        }
+      }
+
+      if (!dpr && !scale) {
+        var isAndroid = win.navigator.appVersion.match(/android/gi);
+        var isIPhone = win.navigator.appVersion.match(/iphone/gi);
+        var devicePixelRatio = win.devicePixelRatio;
+        if (isIPhone) {
+          // iOS下，对于2和3的屏，用2倍的方案，其余的用1倍方案
+          if (devicePixelRatio >= 3 && (!dpr || dpr >= 3)) {
+            dpr = 3;
+          } else if (devicePixelRatio >= 2 && (!dpr || dpr >= 2)) {
+            dpr = 2;
+          } else {
+            dpr = 1;
+          }
+        } else {
+          // 其他设备下，仍旧使用1倍的方案
+          dpr = 1;
+        }
+        scale = 1 / dpr;
+      }
+
+      docEl.setAttribute('data-dpr', dpr);
+      if (!metaEl) {
+        metaEl = doc.createElement('meta');
+        metaEl.setAttribute('name', 'viewport');
+        metaEl.setAttribute('content', 'initial-scale=' + scale + ', maximum-scale=' + scale + ', minimum-scale=' + scale + ', user-scalable=no');
+        if (docEl.firstElementChild) {
+          docEl.firstElementChild.appendChild(metaEl);
+        } else {
+          var wrap = doc.createElement('div');
+          wrap.appendChild(metaEl);
+          doc.write(wrap.innerHTML);
+        }
+      }
+
+      function refreshRem() {
+        var width = docEl.getBoundingClientRect().width;
+        if (width / dpr > 540) {
+          width = 540 * dpr;
+        }
+        var rem = width / 10;
+        docEl.style.fontSize = rem + 'px';
+        flexible.rem = win.rem = rem;
+      }
+
+      win.addEventListener('resize', function() {
+        clearTimeout(tid);
+        tid = setTimeout(refreshRem, 300);
+      }, false);
+      win.addEventListener('pageshow', function(e) {
+        if (e.persisted) {
+          clearTimeout(tid);
+          tid = setTimeout(refreshRem, 300);
+        }
+      }, false);
+
+      if (doc.readyState === 'complete') {
+        doc.body.style.fontSize = 12 * dpr + 'px';
+      } else {
+        doc.addEventListener('DOMContentLoaded', function(e) {
+          doc.body.style.fontSize = 12 * dpr + 'px';
+        }, false);
+      }
+
+
+      refreshRem();
+
+      flexible.dpr = win.dpr = dpr;
+      flexible.refreshRem = refreshRem;
+      flexible.rem2px = function(d) {
+        var val = parseFloat(d) * this.rem;
+        if (typeof d === 'string' && d.match(/rem$/)) {
+          val += 'px';
+        }
+        return val;
+      }
+      flexible.px2rem = function(d) {
+        var val = parseFloat(d) / this.rem;
+        if (typeof d === 'string' && d.match(/px$/)) {
+          val += 'rem';
+        }
+        return val;
+      }
+
+    })(window, window['lib'] || (window['lib'] = {}));
+  </script>
+
+  <style type="text/css">
+    .home .text-content {
+      background: #fbdbdb;
+      padding: 0 0.53333rem;
+      height: 1.06667rem;
+      line-height: 1.06667rem;
+      font-size: 0.37333rem;
+      font-weight: bold;
+      color: #666;
+    }
+
+    .home .text-content a {
+      float: right;
+      color: #666;
+      font-size: 0.37333rem;
+      font-weight: normal;
+      text-decoration: none;
+    }
+
+    .home .text-content a::after {
+      content: '\E62A';
+    }
+
+    .home .task-content {
+      background-color: #ffefd6;
+      color: #f30;
+    }
+
+    .home .task-content a {
+      color: #01b76d;
+    }
+
+    .home .no-more {
+      height: 1.25333rem;
+      text-align: center;
+      color: #999;
+    }
+  </style>
+
+  <style type="text/css">
+    .list {
+      background: #fff;
+      padding: 0.13333rem 0.53333rem 0.53333rem 0.53333rem;
+      color: #01b76d;
+      font-size: 0.37333rem;
+    }
+
+    .list li {
+      margin: 0.26667rem 0;
+    }
+
+    .list span {
+      margin-right: 0.53333rem;
+      font-size: 0.37333rem;
+    }
+
+    .list span::before {
+      margin-right: 0.13333rem;
+      content: '\E666';
+    }
+
+    .list span.item-select::before {
+      content: '\E613';
+    }
+
+    .list .box-btn {
+      overflow: hidden;
+      margin-top: 0.53333rem;
+    }
+
+    .list .btn {
+      background-color: #bfedda;
+      border: 1px solid #01b76d;
+      border-radius: 5px;
+      width: 1.92rem;
+      height: 0.72rem;
+      text-align: center;
+      line-height: 0.72rem;
+    }
+
+    .list .all-btn {
+      float: left;
+    }
+
+    .list .left-btn {
+      float: left;
+      margin-left: 0.4rem;
+    }
+
+    .list .sure-btn {
+      float: right;
+      background-color: #01b76d;
+      color: #fff;
+    }
+  </style>
+
+  <style type="text/css">
+.task {
+  margin: 0.53333rem 0;
+  padding: 0 0.53333rem;
+  overflow: hidden;
+}
+.task .img-wrap {
+    float: left;
+    margin-bottom: -25%;
+    overflow: hidden;
+    width: 25%;
+    padding-bottom: 25%;
+}
+.task .img-wrap img {
+      display: block;
+      width: 100%;
+}
+.task .task-info {
+    margin-left: 28%;
+    width: 100%;
+}
+.task .task-info div {
+      margin: 0.26667rem 0;
+}
+.task .task-info div:first-child {
+      margin-top: 0;
+}
+.task .task-title .icon {
+    font-size: 0.48rem;
+    vertical-align: bottom;
+}
+.task .task-title .taobao {
+    color: #f60;
+}
+.task .task-title .mobile {
+    color: #fdaa29;
+}
+.task .task-title .title {
+    font-size: 0.37333rem;
+}
+.task .task-title .first {
+    color: #000;
+}
+.task .task-title .second {
+    color: #f00;
+}
+.task .task-money {
+    font-size: 0.32rem;
+    color: #666;
+}
+.task .task-money span:first-child {
+      margin-right: 0.4rem;
+}
+.task .task-btn {
+    background-color: #01b76d;
+    border-radius: 0.13333rem;
+    width: 4.8rem;
+    height: 0.90667rem;
+    line-height: 0.90667rem;
+    font-size: 0.48rem;
+    font-weight: normal;
+    color: #fff;
+    text-align: center;
+}
+</style>
+
+</head>
+
+<body style="font-size: 12px;">
+  <div>
+    <div id="app" class="page-content">
+      <section class="banner"><img src="../img/apptopmstj.png" class="bar-img"></section>
+      <div class="home page-content">
+        <section class="navigator">
+          <div class="title-wrap">
+             <span class="title">任务大厅</span>
+             <span class="sub-title iconfont show-list">筛选</span></div>
+        </section>
+        <section>
+          <div class="list">
+            <ul class="box-list">
+              <li><span class="iconfont">淘宝任务</span><span class="iconfont">京东任务</span></li>
+              <li><span class="iconfont">APP任务</span><span class="iconfont">PC任务</span></li>
+              <li><span class="iconfont">精品任务</span><span class="iconfont">预售任务</span><span class="iconfont">普通任务</span></li>
+              <li><span class="iconfont">特别任务</span><span class="iconfont">浏览任务</span></li>
+            </ul>
+            <div class="box-btn">
+              <div class="btn all-btn">全选</div>
+              <div class="btn left-btn">反选</div>
+              <div class="btn sure-btn">确定</div>
+            </div>
+          </div>
+        </section>
+        <section class="text-content">
+          设置实名认证，垫付货款可立返！
+          <a href="/person" class="iconfont">前往</a></section>
+        <section class="text-content">
+          添加地址审核验证，获得更多接单机会！
+          <a href="/person" class="iconfont">前往</a></section>
+        <section class="text-content task-content">
+          今日还可接：
+          <a href="/person" class="iconfont">明细</a></section>
+        <section class="task">
+          <div class="img-wrap"><img src="../img/home.png"></div>
+          <div class="task-info">
+            <div class="task-title">
+              <i class="icon taobao iconfont">&#xe61f;</i>
+              <i class="icon mobile iconfont">&#xe63a;</i>
+              <span class="title first">手机端 - </span>
+              <span class="title second">普通销售任务</span></div>
+            <div class="task-money"><span>垫付货款：100元</span> <span>任务佣金：6.65 金币</span></div>
+            <div class="task-pic">
+              <img src="../img/bi.png">
+              <img src="../img/zhu.png">
+              <img src="../img/ping.png">
+              <img src="../img/scbb-def.png">
+              <img src="../img/scdp-def.png">
+              <img src="../img/tjgwc-def.png">
+              <img src="../img/wzhp.png">
+            </div>
+            <div class="task-btn">
+              抢此任务
+            </div>
+          </div>
+        </section>
+        <section class="task">
+          <div class="img-wrap"><img src="http://m.chongshouye.com/common/image/task/20170803/42338/288aea11-65ae-4e78-9792-c8df7c722765_png.json"></div>
+          <div class="task-info">
+            <div class="task-title"><i class="icon taobao iconfont"></i> <i class="icon mobile iconfont"></i> <span class="title first">手机端 - </span> <span class="title second">普通销售任务</span></div>
+            <div class="task-money"><span>垫付货款：100元</span> <span>任务佣金：6.65 金币</span></div>
+            <div class="task-pic">
+              <img src="../img/bi.png">
+              <img src="../img/zhu.png">
+              <img src="../img/ping.png">
+              <img src="../img/scbb-def.png">
+              <img src="../img/scdp-def.png">
+              <img src="../img/tjgwc-def.png">
+              <img src="../img/wzhp.png">
+            </div>
+            <div class="task-btn">
+              抢此任务
+            </div>
+          </div>
+        </section>
+        <section class="task">
+          <div class="img-wrap"><img src="http://m.chongshouye.com/common/image/task/20170803/42338/288aea11-65ae-4e78-9792-c8df7c722765_png.json"></div>
+          <div class="task-info">
+            <div class="task-title"><i class="icon taobao iconfont"></i> <i class="icon mobile iconfont"></i> <span class="title first">手机端 - </span> <span class="title second">普通销售任务</span></div>
+            <div class="task-money"><span>垫付货款：100元</span> <span>任务佣金：6.65 金币</span></div>
+            <div class="task-pic">
+              <img src="../img/bi.png">
+              <img src="../img/zhu.png">
+              <img src="../img/ping.png">
+              <img src="../img/scbb-def.png">
+              <img src="../img/scdp-def.png">
+              <img src="../img/tjgwc-def.png">
+              <img src="../img/wzhp.png">
+            </div>
+            <div class="task-btn">
+              抢此任务
+            </div>
+          </div>
+        </section>
+        <section class="task">
+          <div class="img-wrap"><img src="http://m.chongshouye.com/common/image/task/20170803/42338/288aea11-65ae-4e78-9792-c8df7c722765_png.json"></div>
+          <div class="task-info">
+            <div class="task-title"><i class="icon taobao iconfont"></i> <i class="icon mobile iconfont"></i> <span class="title first">手机端 - </span> <span class="title second">普通销售任务</span></div>
+            <div class="task-money"><span>垫付货款：100元</span> <span>任务佣金：6.65 金币</span></div>
+            <div class="task-pic">
+              <img src="../img/bi.png">
+              <img src="../img/zhu.png">
+              <img src="../img/ping.png">
+              <img src="../img/scbb-def.png">
+              <img src="../img/scdp-def.png">
+              <img src="../img/tjgwc-def.png">
+              <img src="../img/wzhp.png">
+            </div>
+            <div class="task-btn">
+              抢此任务
+            </div>
+          </div>
+        </section>
+        <section class="no-more">
+          没有更多了
+        </section>
+      </div>
+      <section class="footer"><a href="/home" class="item router-link-exact-active router-link-active"><span class="text home iconfont">首页</span></a> <a href="/task" class="item"><span class="text task iconfont">任务</span></a>        <a href="/person" class="item"><span class="text my iconfont">我的</span></a></section>
+    </div>
+  </div>
+
+</body>
+
+</html>

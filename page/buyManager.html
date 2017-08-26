@@ -1,0 +1,460 @@
+<html data-dpr="1" style="font-size: 37.5px;">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge chrome=1">
+  <meta name="renderer" content="webkit">
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1">
+  <meta content="telephone=no" name="format-detection">
+  <title>order</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/footer.css">
+  <link rel="stylesheet" href="../css/navigator.css">
+  <link rel="stylesheet" href="../css/modal.css">
+  <script>
+    ;
+    (function(win, lib) {
+      var doc = win.document;
+      var docEl = doc.documentElement;
+      var metaEl = doc.querySelector('meta[name="viewport"]');
+      var flexibleEl = doc.querySelector('meta[name="flexible"]');
+      var dpr = 0;
+      var scale = 0;
+      var tid;
+      var flexible = lib.flexible || (lib.flexible = {});
+
+      if (metaEl) {
+        console.warn('将根据已有的meta标签来设置缩放比例');
+        var match = metaEl.getAttribute('content').match(/initial\-scale=([\d\.]+)/);
+        if (match) {
+          scale = parseFloat(match[1]);
+          dpr = parseInt(1 / scale);
+        }
+      } else if (flexibleEl) {
+        var content = flexibleEl.getAttribute('content');
+        if (content) {
+          var initialDpr = content.match(/initial\-dpr=([\d\.]+)/);
+          var maximumDpr = content.match(/maximum\-dpr=([\d\.]+)/);
+          if (initialDpr) {
+            dpr = parseFloat(initialDpr[1]);
+            scale = parseFloat((1 / dpr).toFixed(2));
+          }
+          if (maximumDpr) {
+            dpr = parseFloat(maximumDpr[1]);
+            scale = parseFloat((1 / dpr).toFixed(2));
+          }
+        }
+      }
+
+      if (!dpr && !scale) {
+        var isAndroid = win.navigator.appVersion.match(/android/gi);
+        var isIPhone = win.navigator.appVersion.match(/iphone/gi);
+        var devicePixelRatio = win.devicePixelRatio;
+        if (isIPhone) {
+          // iOS下，对于2和3的屏，用2倍的方案，其余的用1倍方案
+          if (devicePixelRatio >= 3 && (!dpr || dpr >= 3)) {
+            dpr = 3;
+          } else if (devicePixelRatio >= 2 && (!dpr || dpr >= 2)) {
+            dpr = 2;
+          } else {
+            dpr = 1;
+          }
+        } else {
+          // 其他设备下，仍旧使用1倍的方案
+          dpr = 1;
+        }
+        scale = 1 / dpr;
+      }
+
+      docEl.setAttribute('data-dpr', dpr);
+      if (!metaEl) {
+        metaEl = doc.createElement('meta');
+        metaEl.setAttribute('name', 'viewport');
+        metaEl.setAttribute('content', 'initial-scale=' + scale + ', maximum-scale=' + scale + ', minimum-scale=' + scale + ', user-scalable=no');
+        if (docEl.firstElementChild) {
+          docEl.firstElementChild.appendChild(metaEl);
+        } else {
+          var wrap = doc.createElement('div');
+          wrap.appendChild(metaEl);
+          doc.write(wrap.innerHTML);
+        }
+      }
+
+      function refreshRem() {
+        var width = docEl.getBoundingClientRect().width;
+        if (width / dpr > 540) {
+          width = 540 * dpr;
+        }
+        var rem = width / 10;
+        docEl.style.fontSize = rem + 'px';
+        flexible.rem = win.rem = rem;
+      }
+
+      win.addEventListener('resize', function() {
+        clearTimeout(tid);
+        tid = setTimeout(refreshRem, 300);
+      }, false);
+      win.addEventListener('pageshow', function(e) {
+        if (e.persisted) {
+          clearTimeout(tid);
+          tid = setTimeout(refreshRem, 300);
+        }
+      }, false);
+
+      if (doc.readyState === 'complete') {
+        doc.body.style.fontSize = 12 * dpr + 'px';
+      } else {
+        doc.addEventListener('DOMContentLoaded', function(e) {
+          doc.body.style.fontSize = 12 * dpr + 'px';
+        }, false);
+      }
+
+
+      refreshRem();
+
+      flexible.dpr = win.dpr = dpr;
+      flexible.refreshRem = refreshRem;
+      flexible.rem2px = function(d) {
+        var val = parseFloat(d) * this.rem;
+        if (typeof d === 'string' && d.match(/rem$/)) {
+          val += 'px';
+        }
+        return val;
+      }
+      flexible.px2rem = function(d) {
+        var val = parseFloat(d) / this.rem;
+        if (typeof d === 'string' && d.match(/px$/)) {
+          val += 'rem';
+        }
+        return val;
+      }
+
+    })(window, window['lib'] || (window['lib'] = {}));
+  </script>
+  <style type="text/css">
+    .buy-manager-page .orange-wrap {
+      background: #ffefd6;
+      padding: 0.53333rem;
+    }
+
+    .buy-manager-page .orange-wrap .p-title {
+      color: #f30;
+    }
+
+    .buy-manager-page .orange-wrap p {
+      line-height: 0.53333rem;
+      color: #999;
+    }
+
+    .buy-manager-page .fs {
+      color: #f30;
+    }
+
+    .buy-manager-page .table-wrap {
+      margin-bottom: 0.26667rem;
+    }
+
+    .buy-manager-page table {
+      background: #fff;
+      border-bottom: 1px solid #f1f1f1;
+      width: 100%;
+    }
+
+    .buy-manager-page table thead {
+      border-bottom: 1px solid #f1f1f1;
+      font-size: 0.32rem;
+      font-weight: normal;
+      color: #01b76d;
+    }
+
+    .buy-manager-page table tbody {
+      text-align: center;
+      color: #999;
+    }
+
+    .buy-manager-page table tr {
+      height: 1.28rem;
+    }
+
+    .buy-manager-page table img {
+      display: inherit;
+      margin: 0 auto;
+    }
+
+    .buy-manager-page table .tb-btn {
+      background: #01b76d;
+      border-radius: 0.06667rem;
+      padding: 0 0.16rem;
+      color: #fff;
+    }
+
+    .buy-manager-page table .show-b {
+      border-bottom: 1px solid #f1f1f1;
+    }
+
+    .buy-manager-page table .setting {
+      padding: 0 0.26667rem;
+      font-size: 0.64rem;
+    }
+
+    .buy-manager-page table .show-x-b::before {
+      background: #FF8957;
+      border-radius: 50%;
+      margin-right: 0.13333rem;
+      padding: 0 0.10667rem 0 0.08rem;
+      width: 0.53333rem;
+      height: 0.53333rem;
+      font-size: 0.37333rem;
+      color: #fff;
+      content: '\9500';
+    }
+
+    .buy-manager-page table .show-l-b::before {
+      background: #81bbee;
+      border-radius: 50%;
+      margin-right: 0.13333rem;
+      padding: 0 0.08rem;
+      width: 0.53333rem;
+      height: 0.53333rem;
+      font-size: 0.37333rem;
+      color: #fff;
+      content: '\6D4F';
+    }
+
+    .buy-manager-page .account-item {
+      color: #01b76d;
+    }
+
+    .buy-manager-page .account-item .text-con::before {
+      vertical-align: sub;
+      font-size: 0.58667rem;
+      content: '\E63C';
+    }
+
+    .buy-manager-page .setting-con {
+      z-index: 110001;
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+    }
+
+    .buy-manager-page .setting-con .header {
+      background: #fff;
+      margin: 0 auto;
+      border-radius: 0.06667rem;
+      width: 95%;
+    }
+
+    .buy-manager-page .setting-con .header p {
+      text-align: center;
+      line-height: 1.33333rem;
+      font-size: 0.34667rem;
+      color: #666;
+      text-decoration: none;
+    }
+
+    .buy-manager-page .setting-con .header p:first-child {
+      border-bottom: 1px solid #f1f1f1;
+    }
+
+    .buy-manager-page .setting-con .header p:first-child::before {
+      margin-right: 0.08rem;
+      vertical-align: bottom;
+      font-size: 0.53333rem;
+      content: '\E625';
+    }
+
+    .buy-manager-page .setting-con .header p:last-child::before {
+      margin-right: 0.08rem;
+      vertical-align: bottom;
+      font-size: 0.53333rem;
+      content: '\E812';
+    }
+
+    .buy-manager-page .setting-con .body {
+      background: #fff;
+      margin: 0.26667rem auto 0.26667rem;
+      border-radius: 0.06667rem;
+      width: 95%;
+      line-height: 1.33333rem;
+      text-align: center;
+      font-size: 0.37333rem;
+      color: #007aff;
+    }
+  </style>
+  <style type="text/css">
+    .tab-wrp {
+      background: #fff;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .tab-wrp .tab-item-wrap {
+      overflow: hidden;
+    }
+
+    .tab-wrp .tab-item {
+      width: 50%;
+      line-height: 1.2rem;
+      font-size: 0.37333rem;
+      color: #999;
+      text-align: center;
+    }
+
+    .tab-wrp .tab-item::after {
+      display: block;
+      background-color: #f8f8f8;
+      width: 100%;
+      height: 0.10667rem;
+      content: '';
+    }
+
+    .tab-wrp .tab-item.active {
+      color: #01b76d;
+    }
+
+    .tab-wrp .tab-item.active::after {
+      background-color: #01b76d;
+    }
+
+    .tab-wrp .tab-l {
+      float: left;
+    }
+
+    .tab-wrp .tab-r {
+      position: relative;
+      float: right;
+    }
+
+    .tab-wrp .tab-r:before {
+      position: absolute;
+      display: block;
+      top: 0.10667rem;
+      background-color: #ddd;
+      width: 2px;
+      height: 0.93333rem;
+      content: '';
+    }
+  </style>
+  <style type="text/css">
+    .modify-wrap {
+      position: relative;
+      background: #fff;
+      width: 100%;
+      height: 1.28rem;
+      line-height: 1.28rem;
+      font-size: 0.37333rem;
+      color: #666;
+    }
+
+    .modify-wrap .modify-con {
+      padding-left: 0.53333rem;
+    }
+
+    .modify-wrap .modify-txt {
+      position: absolute;
+      top: 0;
+      right: 1.17333rem;
+    }
+
+    .modify-wrap .icon {
+      position: absolute;
+      top: 0;
+      right: 0.4rem;
+      font-size: 0.48rem;
+      font-weight: bold;
+      color: #666;
+      text-decoration: none;
+    }
+  </style>
+
+</head>
+
+<body style="font-size: 12px;">
+  <div>
+    <div id="app" class="page-content">
+      <section class="banner"><img src="../img/apptopmstj.png" class="bar-img"></section>
+      <div class="buy-manager-page page-content">
+        <section class="navigator second">
+          <span class="iconfont icon">&#xe701;</span>
+          <span class="title">买号管理</span>
+        </section>
+        <section class="orange-wrap fs">
+          <p>
+            不要在同一个设备和网络环境下，使用多个小号同时刷单。否则容易被淘宝侦测到，影响你的小号安全。
+          </p>
+        </section>
+        <section class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>账号</th>
+                <th>今日剩余</th>
+                <th>近7日剩余</th>
+                <th>明日可接</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td rowspan="2">
+                  车e族网
+                  <img src="../img/b_red_4.gif">
+                  <span class="tb-btn">花呗</span>
+                </td>
+                <td class="show-b "><span class="show-before show-x-b">3/3</span></td>
+                <td class="show-b">15/15</td>
+                <td class="show-b">3</td>
+                <td rowspan="2"><span class="iconfont setting">&#xe60e;</span></td>
+              </tr>
+              <tr>
+                <td class="show-l-b show-before">3/3</td>
+                <td>15/15</td>
+                <td>3</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+        <section class="tab-wrp">
+          <div class="tab-item-wrap">
+            <div class="tab-l tab-item active">淘宝账号</div>
+            <div class="tab-r tab-item">京东账号</div>
+          </div>
+          <div>
+            <div class="modify-wrap account-item">
+              <div class="modify-con">
+                <span class="text-con iconfont"> 添加淘宝账号</span>
+              </div>
+              <a href="/person/add-taobao-manager" class="iconfont icon">&#xe63c;</a></div>
+            <section class="orange-wrap">
+              <p class="p-title">注意事项：</p>
+              <p>1、接单量限制：1个淘宝账号1天最多可接3单，每周最多可接15单。“周”指的是近7天，不是自然周。</p>
+              <p>2、最多绑定2个淘宝账号。</p>
+              <p>3、浏览任务接单量限制：1个淘宝账号1天最多可接30单，每周最多可接150单。“周”指的是近7天，不是自然周。</p>
+            </section>
+          </div>
+        </section>
+        <div transition="modal" class="modal-mask" style="display: none;">
+          <div class="modal-wrapper">
+            <div class="modal-container" style="display: none;">
+              Tips
+
+
+              <div class="modal-footer border-none"><button class="modal-default-button modal-button-ok border-none" style="display: none;">
+                        Ok
+                    </button> <button class="modal-default-button modal-button-cancel" style="display: none;">
+                        Cancel
+                    </button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <section class="footer"><a href="/home" class="item"><span class="text home iconfont">首页</span></a> <a href="/task" class="item"><span class="text task iconfont">任务</span></a> <a href="/person" class="item router-link-active"><span class="text my iconfont">我的</span></a></section>
+    </div>
+  </div>
+  <!-- built files will be auto injected -->
+
+
+</body>
+
+</html>

@@ -1,0 +1,369 @@
+<html data-dpr="1">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge chrome=1">
+  <meta name="renderer" content="webkit">
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1">
+  <meta content="telephone=no" name="format-detection">
+  <title>order</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/footer.css">
+  <link rel="stylesheet" href="../css/navigator.css">
+  <link rel="stylesheet" href="../css/modal.css">
+
+  <script>
+    ;
+    (function(win, lib) {
+      var doc = win.document;
+      var docEl = doc.documentElement;
+      var metaEl = doc.querySelector('meta[name="viewport"]');
+      var flexibleEl = doc.querySelector('meta[name="flexible"]');
+      var dpr = 0;
+      var scale = 0;
+      var tid;
+      var flexible = lib.flexible || (lib.flexible = {});
+
+      if (metaEl) {
+        console.warn('将根据已有的meta标签来设置缩放比例');
+        var match = metaEl.getAttribute('content').match(/initial\-scale=([\d\.]+)/);
+        if (match) {
+          scale = parseFloat(match[1]);
+          dpr = parseInt(1 / scale);
+        }
+      } else if (flexibleEl) {
+        var content = flexibleEl.getAttribute('content');
+        if (content) {
+          var initialDpr = content.match(/initial\-dpr=([\d\.]+)/);
+          var maximumDpr = content.match(/maximum\-dpr=([\d\.]+)/);
+          if (initialDpr) {
+            dpr = parseFloat(initialDpr[1]);
+            scale = parseFloat((1 / dpr).toFixed(2));
+          }
+          if (maximumDpr) {
+            dpr = parseFloat(maximumDpr[1]);
+            scale = parseFloat((1 / dpr).toFixed(2));
+          }
+        }
+      }
+
+      if (!dpr && !scale) {
+        var isAndroid = win.navigator.appVersion.match(/android/gi);
+        var isIPhone = win.navigator.appVersion.match(/iphone/gi);
+        var devicePixelRatio = win.devicePixelRatio;
+        if (isIPhone) {
+          // iOS下，对于2和3的屏，用2倍的方案，其余的用1倍方案
+          if (devicePixelRatio >= 3 && (!dpr || dpr >= 3)) {
+            dpr = 3;
+          } else if (devicePixelRatio >= 2 && (!dpr || dpr >= 2)) {
+            dpr = 2;
+          } else {
+            dpr = 1;
+          }
+        } else {
+          // 其他设备下，仍旧使用1倍的方案
+          dpr = 1;
+        }
+        scale = 1 / dpr;
+      }
+
+      docEl.setAttribute('data-dpr', dpr);
+      if (!metaEl) {
+        metaEl = doc.createElement('meta');
+        metaEl.setAttribute('name', 'viewport');
+        metaEl.setAttribute('content', 'initial-scale=' + scale + ', maximum-scale=' + scale + ', minimum-scale=' + scale + ', user-scalable=no');
+        if (docEl.firstElementChild) {
+          docEl.firstElementChild.appendChild(metaEl);
+        } else {
+          var wrap = doc.createElement('div');
+          wrap.appendChild(metaEl);
+          doc.write(wrap.innerHTML);
+        }
+      }
+
+      function refreshRem() {
+        var width = docEl.getBoundingClientRect().width;
+        if (width / dpr > 540) {
+          width = 540 * dpr;
+        }
+        var rem = width / 10;
+        docEl.style.fontSize = rem + 'px';
+        flexible.rem = win.rem = rem;
+      }
+
+      win.addEventListener('resize', function() {
+        clearTimeout(tid);
+        tid = setTimeout(refreshRem, 300);
+      }, false);
+      win.addEventListener('pageshow', function(e) {
+        if (e.persisted) {
+          clearTimeout(tid);
+          tid = setTimeout(refreshRem, 300);
+        }
+      }, false);
+
+      if (doc.readyState === 'complete') {
+        doc.body.style.fontSize = 12 * dpr + 'px';
+      } else {
+        doc.addEventListener('DOMContentLoaded', function(e) {
+          doc.body.style.fontSize = 12 * dpr + 'px';
+        }, false);
+      }
+
+
+      refreshRem();
+
+      flexible.dpr = win.dpr = dpr;
+      flexible.refreshRem = refreshRem;
+      flexible.rem2px = function(d) {
+        var val = parseFloat(d) * this.rem;
+        if (typeof d === 'string' && d.match(/rem$/)) {
+          val += 'px';
+        }
+        return val;
+      }
+      flexible.px2rem = function(d) {
+        var val = parseFloat(d) / this.rem;
+        if (typeof d === 'string' && d.match(/px$/)) {
+          val += 'rem';
+        }
+        return val;
+      }
+
+    })(window, window['lib'] || (window['lib'] = {}));
+  </script>
+  <style type="text/css">
+    .login {
+      width: 100%;
+      min-height: 8rem;
+    }
+
+    .login .login-img {
+      width: 100%;
+    }
+
+    .login .input-wrap {
+      position: relative;
+      margin: 0 auto 0.53333rem;
+      width: 90%;
+    }
+
+    .login .row {
+      margin: 0.21333rem 0;
+      overflow: hidden;
+    }
+
+    .login .row-name {
+      display: block;
+      float: left;
+      width: 25%;
+      line-height: 1.17333rem;
+      text-align: right;
+      font-size: 0.34667rem;
+      color: #999;
+    }
+
+    .login .text-input {
+      float: right;
+      display: block;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 0.13333rem;
+      padding-left: 0.26667rem;
+      width: 70%;
+      height: 1.17333rem;
+      color: #ccc;
+    }
+
+    .login .imp-tip {
+      float: right;
+      margin-left: 0.05333rem;
+      line-height: 1.17333rem;
+      color: #f30;
+    }
+
+    .login .row-right {
+      float: right;
+      width: 70%;
+    }
+
+    .login .dx-input {
+      display: block;
+      float: left;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 0.13333rem;
+      padding-left: 0.26667rem;
+      width: 60%;
+      height: 1.17333rem;
+      color: #ccc;
+    }
+
+    .login .dx-text {
+      display: block;
+      float: right;
+      border: 1px solid #01b76d;
+      border-radius: 0.13333rem;
+      width: 35%;
+      height: 1.06667rem;
+      text-align: center;
+      line-height: 1.06667rem;
+      color: #01b76d;
+    }
+
+    .login .register {
+      display: block;
+      border: 1px solid #01b76d;
+      border-radius: 0.13333rem;
+      margin: 0.26667rem auto 0;
+      width: 90%;
+      height: 1.17333rem;
+      text-align: center;
+      line-height: 1.17333rem;
+      color: #01b76d;
+      font-size: 0.48rem;
+    }
+
+    .login .modal-header {
+      font-weight: bold;
+      font-size: 0.4rem;
+    }
+
+    .login .modal-body {
+      font-size: 0.34667rem;
+      color: #999;
+    }
+  </style>
+  <style type="text/css">
+    .btn {
+      background: #01b76d;
+      border-radius: 0.13333rem;
+      margin: 0.26667rem auto 0;
+      width: 90%;
+      height: 1.17333rem;
+      text-align: center;
+      line-height: 1.17333rem;
+      color: #fff;
+      font-size: 0.48rem;
+    }
+  </style>
+  <style type="text/css">
+    .modal-mask {
+      display: box;
+      box-align: center;
+      box-pack: center;
+      position: fixed;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      top: 0;
+      left: 0;
+      transition: opacity .3s ease;
+      z-index: 30001;
+      background-color: rgba(0, 0, 0, 0.5);
+      width: 100%;
+      height: 100%;
+    }
+
+    .modal-container {
+      transition: all .3s ease;
+      margin: 0 auto;
+      border-radius: 2px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
+      background-color: #fff;
+      padding: 0.53333rem 0.8rem;
+      width: 8rem;
+      font-size: fontsize(28px);
+    }
+
+    .modal-header h3 {
+      margin-top: 0;
+      color: #42b983;
+    }
+
+    .modal-body {
+      margin: 0.53333rem 0;
+    }
+
+    .modal-footer {
+      display: box;
+      display: flex;
+      border-top: 1px solid #cdc7c7;
+      width: 100%;
+    }
+
+    .modal-footer button {
+      box-flex: 1;
+      flex: 1;
+      display: block;
+      border: 0;
+      padding: 15px 0;
+      text-align: center;
+      text-decoration: none;
+      color: #999;
+    }
+
+    .modal-footer button:first-child {
+      border-right: 1px solid #cdc7c7;
+      color: #fff;
+    }
+
+    .modal-footer.border-none {
+      border: 0;
+    }
+
+    .modal-enter,
+    .modal-leave {
+      opacity: 0;
+    }
+
+    .modal-enter .modal-container,
+    .modal-leave .modal-container {
+      transform: scale(1.1);
+    }
+
+    .ok {
+      background: #387ef5;
+      color: #fff;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <div class="login page-content"><img src="../img/login.png" class="login-img">
+      <div class="input-wrap">
+        <div class="row"><span class="row-name">手&nbsp;&nbsp;机&nbsp;&nbsp;号:</span> <span class="imp-tip">*</span> <input type="number" class="text-input"></div>
+        <div class="row"><span class="row-name">账号密码:</span> <span class="imp-tip">*</span> <input type="password" class="text-input"></div>
+        <div class="row"><span class="row-name">确认密码:</span> <span class="imp-tip">*</span> <input type="password" class="text-input"></div>
+        <div class="row"><span class="row-name">QQ号:</span> <span class="imp-tip">*</span> <input class="text-input"></div>
+        <div class="row">
+          <span class="row-name">短信验证码:</span> <span class="imp-tip">*</span>
+          <div class="row-right"><input type="text" class="dx-input"> <span class="dx-text">获取验证码</span></div>
+        </div>
+      </div>
+      <div class="btn">立即注册
+      </div> <a href="/login" class="register">已有账号，前往登录</a>
+      <div transition="modal" class="modal-mask" style="display: none;">
+        <div class="modal-wrapper">
+          <div class="modal-container">
+            <div class="modal-header"> 提示 </div>
+            <div class="modal-body">确认密码不能为空</div>
+            <div class="modal-footer"><button class="modal-default-button modal-button-ok border-none ok">
+                  OK
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- built files will be auto injected -->
+  <script type="text/javascript" src="../js/lib/zepto.js"></script>
+  <script type="text/javascript" src="../js/register.js"></script>
+
+</script>
+
+</body>
+
+</html>

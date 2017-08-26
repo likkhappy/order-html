@@ -1,0 +1,311 @@
+<html data-dpr="1" style="font-size: 37.5px;">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge chrome=1">
+  <meta name="renderer" content="webkit">
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1">
+  <meta content="telephone=no" name="format-detection">
+  <title>order</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/footer.css">
+  <link rel="stylesheet" href="../css/navigator.css">
+  <link rel="stylesheet" href="../css/modal.css">
+
+  <script>
+    ;
+    (function(win, lib) {
+      var doc = win.document;
+      var docEl = doc.documentElement;
+      var metaEl = doc.querySelector('meta[name="viewport"]');
+      var flexibleEl = doc.querySelector('meta[name="flexible"]');
+      var dpr = 0;
+      var scale = 0;
+      var tid;
+      var flexible = lib.flexible || (lib.flexible = {});
+
+      if (metaEl) {
+        console.warn('将根据已有的meta标签来设置缩放比例');
+        var match = metaEl.getAttribute('content').match(/initial\-scale=([\d\.]+)/);
+        if (match) {
+          scale = parseFloat(match[1]);
+          dpr = parseInt(1 / scale);
+        }
+      } else if (flexibleEl) {
+        var content = flexibleEl.getAttribute('content');
+        if (content) {
+          var initialDpr = content.match(/initial\-dpr=([\d\.]+)/);
+          var maximumDpr = content.match(/maximum\-dpr=([\d\.]+)/);
+          if (initialDpr) {
+            dpr = parseFloat(initialDpr[1]);
+            scale = parseFloat((1 / dpr).toFixed(2));
+          }
+          if (maximumDpr) {
+            dpr = parseFloat(maximumDpr[1]);
+            scale = parseFloat((1 / dpr).toFixed(2));
+          }
+        }
+      }
+
+      if (!dpr && !scale) {
+        var isAndroid = win.navigator.appVersion.match(/android/gi);
+        var isIPhone = win.navigator.appVersion.match(/iphone/gi);
+        var devicePixelRatio = win.devicePixelRatio;
+        if (isIPhone) {
+          // iOS下，对于2和3的屏，用2倍的方案，其余的用1倍方案
+          if (devicePixelRatio >= 3 && (!dpr || dpr >= 3)) {
+            dpr = 3;
+          } else if (devicePixelRatio >= 2 && (!dpr || dpr >= 2)) {
+            dpr = 2;
+          } else {
+            dpr = 1;
+          }
+        } else {
+          // 其他设备下，仍旧使用1倍的方案
+          dpr = 1;
+        }
+        scale = 1 / dpr;
+      }
+
+      docEl.setAttribute('data-dpr', dpr);
+      if (!metaEl) {
+        metaEl = doc.createElement('meta');
+        metaEl.setAttribute('name', 'viewport');
+        metaEl.setAttribute('content', 'initial-scale=' + scale + ', maximum-scale=' + scale + ', minimum-scale=' + scale + ', user-scalable=no');
+        if (docEl.firstElementChild) {
+          docEl.firstElementChild.appendChild(metaEl);
+        } else {
+          var wrap = doc.createElement('div');
+          wrap.appendChild(metaEl);
+          doc.write(wrap.innerHTML);
+        }
+      }
+
+      function refreshRem() {
+        var width = docEl.getBoundingClientRect().width;
+        if (width / dpr > 540) {
+          width = 540 * dpr;
+        }
+        var rem = width / 10;
+        docEl.style.fontSize = rem + 'px';
+        flexible.rem = win.rem = rem;
+      }
+
+      win.addEventListener('resize', function() {
+        clearTimeout(tid);
+        tid = setTimeout(refreshRem, 300);
+      }, false);
+      win.addEventListener('pageshow', function(e) {
+        if (e.persisted) {
+          clearTimeout(tid);
+          tid = setTimeout(refreshRem, 300);
+        }
+      }, false);
+
+      if (doc.readyState === 'complete') {
+        doc.body.style.fontSize = 12 * dpr + 'px';
+      } else {
+        doc.addEventListener('DOMContentLoaded', function(e) {
+          doc.body.style.fontSize = 12 * dpr + 'px';
+        }, false);
+      }
+
+
+      refreshRem();
+
+      flexible.dpr = win.dpr = dpr;
+      flexible.refreshRem = refreshRem;
+      flexible.rem2px = function(d) {
+        var val = parseFloat(d) * this.rem;
+        if (typeof d === 'string' && d.match(/rem$/)) {
+          val += 'px';
+        }
+        return val;
+      }
+      flexible.px2rem = function(d) {
+        var val = parseFloat(d) / this.rem;
+        if (typeof d === 'string' && d.match(/px$/)) {
+          val += 'rem';
+        }
+        return val;
+      }
+
+    })(window, window['lib'] || (window['lib'] = {}));
+  </script>
+
+  <style type="text/css">
+    .withdraw-page .bank-txt {
+      font-size: 0.37333rem;
+      color: #01b76d;
+    }
+
+    .withdraw-page .bank-txt:before {
+      margin-right: 0.13333rem;
+      font-size: 0.69333rem;
+      color: #01b76d;
+      vertical-align: bottom;
+      content: '\E63C';
+    }
+
+    .withdraw-page .money-list {
+      height: 1.28rem;
+      padding: 0 0.53333rem;
+      line-height: 1.28rem;
+    }
+
+    .withdraw-page .money-list li {
+      display: inline-block;
+    }
+
+    .withdraw-page .money-list .money-k {
+      font-size: 0.4rem;
+      color: #01b76d;
+    }
+
+    .withdraw-page .money-list .money-v {
+      font-size: 0.4rem;
+      color: #666;
+    }
+
+    .withdraw-page .money-list .first-li {
+      margin-right: 1.06667rem;
+    }
+
+    .withdraw-page input[type="text"] {
+      font-size: 0.34667rem;
+      color: #666;
+    }
+
+    .withdraw-page .tack-money {
+      float: right;
+      padding-right: 0.53333rem;
+      text-decoration: none;
+      font-size: 0.34667rem;
+      color: #3c9ff7;
+    }
+
+    .withdraw-page .imp-txt {
+      background: #fff;
+      padding-left: 2.53333rem;
+      line-height: 0.58667rem;
+      color: #f30;
+    }
+
+    .withdraw-page .imp {
+      color: #f30;
+    }
+
+    .withdraw-page .p-title {
+      padding-left: 0.53333rem;
+      line-height: 0.8rem;
+    }
+
+    .withdraw-page .p-sub {
+      padding-left: 1.06667rem;
+    }
+
+    .withdraw-page .modify-list {
+      margin-top: 0.53333rem;
+    }
+
+    .withdraw-page .show-b {
+      border-bottom: 1px solid #f9f9f9;
+    }
+  </style>
+
+  <style type="text/css">
+    .modify-wrap {
+      position: relative;
+      background: #fff;
+      width: 100%;
+      height: 1.28rem;
+      line-height: 1.28rem;
+      font-size: 0.37333rem;
+      color: #666;
+    }
+
+    .modify-wrap .modify-con {
+      padding-left: 0.53333rem;
+    }
+
+    .modify-wrap .modify-txt {
+      position: absolute;
+      top: 0;
+      right: 1.17333rem;
+    }
+
+    .modify-wrap .icon {
+      position: absolute;
+      top: 0;
+      right: 0.4rem;
+      font-size: 0.48rem;
+      font-weight: bold;
+      color: #666;
+      text-decoration: none;
+    }
+  </style>
+  <style type="text/css">
+    .btn {
+      background: #01b76d;
+      border-radius: 0.13333rem;
+      margin: 0.26667rem auto 0;
+      width: 90%;
+      height: 1.17333rem;
+      text-align: center;
+      line-height: 1.17333rem;
+      color: #fff;
+      font-size: 0.48rem;
+    }
+  </style>
+</head>
+
+<body style="font-size: 12px;">
+  <div>
+    <div id="app" class="page-content">
+      <section class="banner"><img src="../img/apptopmstj.png" class="bar-img"></section>
+      <div class="withdraw-page page-content">
+        <section class="navigator second"><span class="iconfont icon">&#xe701;</span>
+          <div class="title-wrap"><span class="title">提现</span> </div>
+        </section>
+        <div class="modify-wrap bank-wrap">
+          <div class="modify-con">
+            <div class="certify-con"><span class="bank-txt iconfont">添加银行卡</span></div>
+          </div> <a href="/person/add-bank-card" class="iconfont icon bank-icon">&#xe700;</a></div>
+        <section class="money-list">
+          <ul>
+            <li class="first-li"><span class="money-k">贷款余额：</span><span class="money-v">¥ 0</span></li>
+            <li><span class="money-k">金币余额：</span><span class="money-v">¥ 0</span></li>
+          </ul>
+        </section>
+        <div class="modify-wrap show-b">
+          <div class="modify-con">
+            <div><span>货款提现：</span> <input type="text" placeholder="最少取1元"> <a href="javascript:void(0);" class="tack-money">全部提款</a></div>
+          </div>
+        </div>
+        <div class="modify-wrap">
+          <div class="modify-con">
+            <div><span>金币提现：</span> <input type="text" placeholder="最少取30元"> <a href="javascript:void(0);" class="tack-money">全部提款</a></div>
+          </div>
+        </div>
+        <div class="imp-txt show-b">金币提现收取5%手续费</div>
+        <div class="modify-wrap show-b">
+          <div class="modify-con">
+            <div><span>支付密码：</span> <input type="text" placeholder="补订单支付密码"> <a href="javascript:void(0);" class="tack-money">忘记密码</a></div>
+          </div>
+        </div>
+        <div class="btn">立即提现
+        </div>
+        <p class="imp p-title">1.每日提现次数不限</p>
+        <p class="imp p-title">2.每日两个返款时间：</p>
+        <p class="imp p-sub">a.12:00（处理昨日18:00-今日12:00间的提现申请）</p>
+        <p class="imp p-sub">b.18:00（处理今日12:00-今日18:00间的提现申请）</p>
+      </div>
+      <section class="footer"><a href="/home" class="item"><span class="text home iconfont">首页</span></a> <a href="/task" class="item"><span class="text task iconfont">任务</span></a> <a href="/person" class="item router-link-active"><span class="text my iconfont">我的</span></a></section>
+    </div>
+  </div>
+  <!-- built files will be auto injected -->
+
+
+</body>
+
+</html>

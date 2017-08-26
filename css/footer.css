@@ -1,0 +1,57 @@
+.show-b {
+  border-bottom: 1px solid #f9f9f9;
+}
+.banner {
+  position: sticky;
+  top: 0;
+  height: 1.25333rem;
+  z-index: 10;
+}
+.bar-img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.page-content {
+  margin-bottom: 1.65333rem;
+}
+.footer {
+  position: fixed;
+  background-color: #fff;
+  bottom: 0;
+  border-top: 1px solid #ededed;
+  width: 100%;
+  height: 1.6rem;
+  z-index: 30000;
+}
+.footer .item {
+    display: block;
+    float: left;
+    width: 33.3333%;
+    line-height: 1.6rem;
+    text-align: center;
+    text-decoration: none;
+    color: #999999;
+}
+.footer .router-link-active {
+    color: #01b76d;
+}
+.footer .text {
+    position: relative;
+    font-size: 0.32rem;
+    line-height: 2.34667rem;
+}
+.footer .text:before {
+      position: absolute;
+      top: -1.6rem;
+      font-size: 0.58667rem;
+}
+.footer .home:before {
+    content: '\E614';
+}
+.footer .task:before {
+    content: '\E636';
+}
+.footer .my:before {
+    content: '\E63D';
+}

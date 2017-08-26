@@ -1,0 +1,81 @@
+body, h1, h2, h3, h4, h5, h6, hr, p, blockquote,
+dl, dt, dd, ul, ol, li,
+pre,
+form, fieldset, legend, button, input, textarea,
+th, td {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #f8f8f8;
+  position: absolute;
+  top:0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+h1, h2, h3, h4, h5, h6 { font-size: 100%; }
+address, cite, dfn, em, var, i { font-style: normal; }
+code, kbd, pre, samp { font-family: arial, courier new, courier, "\5b8b\4f53", monospace; }
+small { font-size: 12px; }
+
+
+ul, ol, li { list-style: none; }
+
+
+sub, sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+sup {
+  top: -0.5em;
+}
+sub {
+  bottom: -0.25em;
+}
+a {
+  text-decoration: none;
+}
+
+
+legend { color: #000; } /* for ie6 */
+fieldset, img { border: 0; }
+button, input, select, textarea { font-size: 100%; }
+
+table { border-collapse: collapse; border-spacing: 0; }
+a,input:focus{outline: none;}
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+menu,
+nav,
+section,
+summary {
+  display: block;
+}
+
+
+@font-face {
+  font-family: 'iconfont';  /* project id 372332 */
+  src: url('http://at.alicdn.com/t/font_372332_g5agxl9utvgqfr.eot');
+  src: url('http://at.alicdn.com/t/font_372332_g5agxl9utvgqfr.eot?#iefix') format('embedded-opentype'),
+  url('http://at.alicdn.com/t/font_372332_g5agxl9utvgqfr.woff') format('woff'),
+  url('http://at.alicdn.com/t/font_372332_g5agxl9utvgqfr.ttf') format('truetype'),
+  url('http://at.alicdn.com/t/font_372332_g5agxl9utvgqfr.svg#iconfont') format('svg');
+}
+
+.iconfont {
+    font-family:"iconfont" !important;
+    font-size:16px;font-style:normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}

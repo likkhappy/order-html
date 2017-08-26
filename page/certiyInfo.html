@@ -1,0 +1,505 @@
+<html data-dpr="1" style="font-size: 37.5px;">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge chrome=1">
+  <meta name="renderer" content="webkit">
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1">
+  <meta content="telephone=no" name="format-detection">
+  <title>order</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/footer.css">
+  <link rel="stylesheet" href="../css/navigator.css">
+  <link rel="stylesheet" href="../css/modal.css">
+
+  <script>
+    ;
+    (function(win, lib) {
+      var doc = win.document;
+      var docEl = doc.documentElement;
+      var metaEl = doc.querySelector('meta[name="viewport"]');
+      var flexibleEl = doc.querySelector('meta[name="flexible"]');
+      var dpr = 0;
+      var scale = 0;
+      var tid;
+      var flexible = lib.flexible || (lib.flexible = {});
+
+      if (metaEl) {
+        console.warn('将根据已有的meta标签来设置缩放比例');
+        var match = metaEl.getAttribute('content').match(/initial\-scale=([\d\.]+)/);
+        if (match) {
+          scale = parseFloat(match[1]);
+          dpr = parseInt(1 / scale);
+        }
+      } else if (flexibleEl) {
+        var content = flexibleEl.getAttribute('content');
+        if (content) {
+          var initialDpr = content.match(/initial\-dpr=([\d\.]+)/);
+          var maximumDpr = content.match(/maximum\-dpr=([\d\.]+)/);
+          if (initialDpr) {
+            dpr = parseFloat(initialDpr[1]);
+            scale = parseFloat((1 / dpr).toFixed(2));
+          }
+          if (maximumDpr) {
+            dpr = parseFloat(maximumDpr[1]);
+            scale = parseFloat((1 / dpr).toFixed(2));
+          }
+        }
+      }
+
+      if (!dpr && !scale) {
+        var isAndroid = win.navigator.appVersion.match(/android/gi);
+        var isIPhone = win.navigator.appVersion.match(/iphone/gi);
+        var devicePixelRatio = win.devicePixelRatio;
+        if (isIPhone) {
+          // iOS下，对于2和3的屏，用2倍的方案，其余的用1倍方案
+          if (devicePixelRatio >= 3 && (!dpr || dpr >= 3)) {
+            dpr = 3;
+          } else if (devicePixelRatio >= 2 && (!dpr || dpr >= 2)) {
+            dpr = 2;
+          } else {
+            dpr = 1;
+          }
+        } else {
+          // 其他设备下，仍旧使用1倍的方案
+          dpr = 1;
+        }
+        scale = 1 / dpr;
+      }
+
+      docEl.setAttribute('data-dpr', dpr);
+      if (!metaEl) {
+        metaEl = doc.createElement('meta');
+        metaEl.setAttribute('name', 'viewport');
+        metaEl.setAttribute('content', 'initial-scale=' + scale + ', maximum-scale=' + scale + ', minimum-scale=' + scale + ', user-scalable=no');
+        if (docEl.firstElementChild) {
+          docEl.firstElementChild.appendChild(metaEl);
+        } else {
+          var wrap = doc.createElement('div');
+          wrap.appendChild(metaEl);
+          doc.write(wrap.innerHTML);
+        }
+      }
+
+      function refreshRem() {
+        var width = docEl.getBoundingClientRect().width;
+        if (width / dpr > 540) {
+          width = 540 * dpr;
+        }
+        var rem = width / 10;
+        docEl.style.fontSize = rem + 'px';
+        flexible.rem = win.rem = rem;
+      }
+
+      win.addEventListener('resize', function() {
+        clearTimeout(tid);
+        tid = setTimeout(refreshRem, 300);
+      }, false);
+      win.addEventListener('pageshow', function(e) {
+        if (e.persisted) {
+          clearTimeout(tid);
+          tid = setTimeout(refreshRem, 300);
+        }
+      }, false);
+
+      if (doc.readyState === 'complete') {
+        doc.body.style.fontSize = 12 * dpr + 'px';
+      } else {
+        doc.addEventListener('DOMContentLoaded', function(e) {
+          doc.body.style.fontSize = 12 * dpr + 'px';
+        }, false);
+      }
+
+
+      refreshRem();
+
+      flexible.dpr = win.dpr = dpr;
+      flexible.refreshRem = refreshRem;
+      flexible.rem2px = function(d) {
+        var val = parseFloat(d) * this.rem;
+        if (typeof d === 'string' && d.match(/rem$/)) {
+          val += 'px';
+        }
+        return val;
+      }
+      flexible.px2rem = function(d) {
+        var val = parseFloat(d) / this.rem;
+        if (typeof d === 'string' && d.match(/px$/)) {
+          val += 'rem';
+        }
+        return val;
+      }
+
+    })(window, window['lib'] || (window['lib'] = {}));
+  </script>
+  <style type="text/css"></style>
+  <style type="text/css">
+    .add-taobao-page input[type="date"] {
+      border: none;
+      background: transparent;
+      color: #9a9a9a;
+    }
+
+    .add-taobao-page .address-tb {
+      background: #fff;
+      text-align: center;
+      color: #999;
+    }
+
+    .add-taobao-page .address-tb p {
+      line-height: 2.66667rem;
+      font-size: 0.34667rem;
+    }
+
+    .add-taobao-page .imp {
+      text-align: center;
+      color: #f30;
+    }
+
+    .add-taobao-page .p-imp {
+      line-height: 0.93333rem;
+      font-size: 0.34667rem;
+    }
+
+    .add-taobao-page .what-taobao {
+      font-size: 0.32rem;
+      color: #f30;
+      text-decoration: underline;
+    }
+
+    .add-taobao-page .middle-img {
+      transform: translateY(50%);
+    }
+
+    .add-taobao-page .item-list-wrap {
+      background: #fff;
+      padding: 0.53333rem 0 0.53333rem 0.34667rem;
+    }
+
+    .add-taobao-page .item-list-wrap li {
+      display: inline-block;
+      background: #fff;
+      margin: 0.13333rem;
+      border: 1px solid #01b76d;
+      border-radius: 0.10667rem;
+      padding: 0.13333rem 0.32rem;
+      color: #01b76d;
+    }
+
+    .add-taobao-page .item-list-wrap li.active {
+      background: #01b76d;
+      color: #fff;
+    }
+
+    .add-taobao-page .light-con {
+      background: #fff;
+      padding: 0.53333rem 0;
+    }
+
+    .add-taobao-page .upload-box {
+      float: left;
+      margin-left: 25%;
+      margin-right: 0.53333rem;
+    }
+
+    .add-taobao-page .def-tip {
+      padding-left: 0.53333rem;
+      color: #999;
+      line-height: 1.28rem;
+    }
+
+    .add-taobao-page .show-taobao-img {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 30001;
+    }
+
+    .add-taobao-page .detail-info {
+      background: #fff;
+      padding-left: 0.53333rem;
+    }
+
+    .add-taobao-page .detail-info li {
+      line-height: 0.8rem;
+      font-size: 0.37333rem;
+      color: #999;
+    }
+  </style>
+  <style type="text/css">
+    .modify-wrap {
+      position: relative;
+      background: #fff;
+      width: 100%;
+      height: 1.28rem;
+      line-height: 1.28rem;
+      font-size: 0.37333rem;
+      color: #666;
+    }
+
+    .modify-wrap .modify-con {
+      padding-left: 0.53333rem;
+    }
+
+    .modify-wrap .modify-txt {
+      position: absolute;
+      top: 0;
+      right: 1.17333rem;
+    }
+
+    .modify-wrap .icon {
+      position: absolute;
+      top: 0;
+      right: 0.4rem;
+      font-size: 0.48rem;
+      font-weight: bold;
+      color: #666;
+      text-decoration: none;
+    }
+  </style>
+  <style type="text/css">
+    .light-bar {
+      background: #ebfff6;
+      padding: 0 0.53333rem;
+      height: 1.28rem;
+      line-height: 1.28rem;
+      font-size: 0.48rem;
+    }
+
+    .light-bar .left-text {
+      font-size: 0.37333rem;
+      color: #01b76d;
+    }
+
+    .light-bar .right-text {
+      font-size: 0.32rem;
+      color: #999;
+    }
+  </style>
+  <style type="text/css">
+    .upload-img {
+      position: relative;
+      background: rgba(0, 0, 0, 0.3);
+      width: 2.13333rem;
+      height: 2.13333rem;
+      text-align: center;
+      color: #fff;
+    }
+
+    .upload-img span {
+      line-height: 2.13333rem;
+      font-size: 0.8rem;
+    }
+
+    .upload-img input {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      outline: none;
+      opacity: 0;
+      z-index: 1000;
+    }
+
+    .upload-img img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 10;
+    }
+  </style>
+  <style type="text/css">
+    .example-box {
+      background-size: cover;
+      background-position: center;
+      width: 2.13333rem;
+      height: 2.13333rem;
+      overflow: hidden;
+    }
+
+    .example-box .box-modal {
+      position: relative;
+    }
+
+    .example-box .def-txt {
+      position: relative;
+      background: rgba(0, 0, 0, 0.3);
+      z-index: 2;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      text-align: center;
+      line-height: 2.13333rem;
+      font-size: 0.4rem;
+      color: #fff;
+    }
+
+    .example-box .small-img {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      text-align: center;
+      line-height: 2.13333rem;
+      font-size: 0.4rem;
+      color: #fff;
+    }
+
+    .example-box .small-img img {
+      width: 100%;
+      height: 100%;
+    }
+
+    .example-box .all-img {
+      position: fixed;
+      width: 100%;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 30002;
+    }
+
+    .example-box .all-img img {
+      width: 100%;
+    }
+
+    .example-box .all-img img.middle-img {
+      transform: translateY(50%);
+    }
+
+    .btn {
+      background: #01b76d;
+      border-radius: 0.13333rem;
+      margin: 0.26667rem auto 0;
+      width: 90%;
+      height: 1.17333rem;
+      text-align: center;
+      line-height: 1.17333rem;
+      color: #fff;
+      font-size: 0.48rem;
+    }
+  </style>
+  <style type="text/css">
+    .btn {
+      background: #01b76d;
+      border-radius: 0.13333rem;
+      margin: 0.26667rem auto 0;
+      width: 90%;
+      height: 1.17333rem;
+      text-align: center;
+      line-height: 1.17333rem;
+      color: #fff;
+      font-size: 0.48rem;
+    }
+  </style>
+</head>
+
+<body style="font-size: 12px;">
+  <div>
+    <div id="app" class="page-content">
+      <section class="banner"><img src="../img/apptopmstj.png" class="bar-img"></section>
+      <div class="add-taobao-page page-content">
+        <section class="navigator second">
+          <span class="iconfont icon">&#xe701;</span>
+          <span class="title">实名认证</span>
+        </section>
+        <div class="modify-wrap show-b">
+          <div class="modify-con">
+            <div><span>真实姓名</span> <input></div>
+          </div>
+        </div>
+        <div class="modify-wrap">
+          <div class="modify-con">
+            <div><span>身份证号</span> <input></div>
+          </div>
+        </div>
+        <section class="light-bar"><span class="left-text">手持身份证正面拍照</span> <span class="right-text"></span></section>
+        <div class="light-con">
+          <div class="upload-box">
+            <div class="upload-img"><span class="iconfont">&#xe620;</span> <input type="file"> </div>
+          </div>
+          <div class="example-box">
+            <div class="example-box">
+              <div class="box-modal">
+                <div class="small-img"><img src="../img/SFZA.jpg"></div>
+                <div class="def-txt">示例图</div>
+              </div>
+              <div transition="modal" class="modal-mask" style="display: none;">
+                <div class="modal-wrapper">
+                  <div class="modal-container" style="display: none;">
+                    Tips
+
+
+                    <div class="modal-footer border-none"><button class="modal-default-button modal-button-ok border-none" style="display: none;">
+                        Ok
+                    </button> <button class="modal-default-button modal-button-cancel" style="display: none;">
+                        Cancel
+                    </button></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <section class="light-bar"><span class="left-text">手持身份证反面拍照</span> <span class="right-text"></span></section>
+        <div class="light-con">
+          <div class="upload-box">
+            <div class="upload-img"><span class="iconfont">&#xe620;</span> <input type="file"> </div>
+          </div>
+          <div class="example-box">
+            <div class="example-box">
+              <div class="box-modal">
+                <div class="small-img"><img src="../img/SFZB.jpg"></div>
+                <div class="def-txt">示例图</div>
+              </div>
+              <div transition="modal" class="modal-mask" style="display: none;">
+                <div class="modal-wrapper">
+                  <div class="modal-container" style="display: none;">
+                    Tips
+
+
+                    <div class="modal-footer border-none"><button class="modal-default-button modal-button-ok border-none" style="display: none;">
+                        Ok
+                    </button> <button class="modal-default-button modal-button-cancel" style="display: none;">
+                        Cancel
+                    </button></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <section class="light-bar"><span class="left-text">照片拍摄要求:</span> <span class="right-text"></span></section>
+        <section class="detail-info">
+          <ul>
+            <li class="item">1.照片需免冠，五官需清晰</li>
+            <li class="item">2.身份证正反面的文字需清晰可辨认</li>
+            <li class="item">3.照片需露出手臂</li>
+            <li class="item">4.照片不得做任何PS处理</li>
+          </ul>
+        </section>
+        <div class="btn">提交审核
+        </div>
+        <p class="imp p-imp">账号审核时间：周一至周六9:00-21:00</p>
+      </div>
+      <section class="footer"><a href="/home" class="item"><span class="text home iconfont">首页</span></a> <a href="/task" class="item"><span class="text task iconfont">任务</span></a> <a href="/person" class="item router-link-active"><span class="text my iconfont">我的</span></a></section>
+    </div>
+  </div>
+  <!-- built files will be auto injected -->
+
+
+</body>
+
+</html>

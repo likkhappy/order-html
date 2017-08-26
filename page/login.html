@@ -1,0 +1,253 @@
+<html data-dpr="1">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge chrome=1">
+  <meta name="renderer" content="webkit">
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1">
+  <meta content="telephone=no" name="format-detection">
+  <title>order</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/footer.css">
+  <link rel="stylesheet" href="../css/navigator.css">
+  <link rel="stylesheet" href="../css/modal.css">
+
+  <script>
+    ;
+    (function(win, lib) {
+      var doc = win.document;
+      var docEl = doc.documentElement;
+      var metaEl = doc.querySelector('meta[name="viewport"]');
+      var flexibleEl = doc.querySelector('meta[name="flexible"]');
+      var dpr = 0;
+      var scale = 0;
+      var tid;
+      var flexible = lib.flexible || (lib.flexible = {});
+
+      if (metaEl) {
+        console.warn('将根据已有的meta标签来设置缩放比例');
+        var match = metaEl.getAttribute('content').match(/initial\-scale=([\d\.]+)/);
+        if (match) {
+          scale = parseFloat(match[1]);
+          dpr = parseInt(1 / scale);
+        }
+      } else if (flexibleEl) {
+        var content = flexibleEl.getAttribute('content');
+        if (content) {
+          var initialDpr = content.match(/initial\-dpr=([\d\.]+)/);
+          var maximumDpr = content.match(/maximum\-dpr=([\d\.]+)/);
+          if (initialDpr) {
+            dpr = parseFloat(initialDpr[1]);
+            scale = parseFloat((1 / dpr).toFixed(2));
+          }
+          if (maximumDpr) {
+            dpr = parseFloat(maximumDpr[1]);
+            scale = parseFloat((1 / dpr).toFixed(2));
+          }
+        }
+      }
+
+      if (!dpr && !scale) {
+        var isAndroid = win.navigator.appVersion.match(/android/gi);
+        var isIPhone = win.navigator.appVersion.match(/iphone/gi);
+        var devicePixelRatio = win.devicePixelRatio;
+        if (isIPhone) {
+          // iOS下，对于2和3的屏，用2倍的方案，其余的用1倍方案
+          if (devicePixelRatio >= 3 && (!dpr || dpr >= 3)) {
+            dpr = 3;
+          } else if (devicePixelRatio >= 2 && (!dpr || dpr >= 2)) {
+            dpr = 2;
+          } else {
+            dpr = 1;
+          }
+        } else {
+          // 其他设备下，仍旧使用1倍的方案
+          dpr = 1;
+        }
+        scale = 1 / dpr;
+      }
+
+      docEl.setAttribute('data-dpr', dpr);
+      if (!metaEl) {
+        metaEl = doc.createElement('meta');
+        metaEl.setAttribute('name', 'viewport');
+        metaEl.setAttribute('content', 'initial-scale=' + scale + ', maximum-scale=' + scale + ', minimum-scale=' + scale + ', user-scalable=no');
+        if (docEl.firstElementChild) {
+          docEl.firstElementChild.appendChild(metaEl);
+        } else {
+          var wrap = doc.createElement('div');
+          wrap.appendChild(metaEl);
+          doc.write(wrap.innerHTML);
+        }
+      }
+
+      function refreshRem() {
+        var width = docEl.getBoundingClientRect().width;
+        if (width / dpr > 540) {
+          width = 540 * dpr;
+        }
+        var rem = width / 10;
+        docEl.style.fontSize = rem + 'px';
+        flexible.rem = win.rem = rem;
+      }
+
+      win.addEventListener('resize', function() {
+        clearTimeout(tid);
+        tid = setTimeout(refreshRem, 300);
+      }, false);
+      win.addEventListener('pageshow', function(e) {
+        if (e.persisted) {
+          clearTimeout(tid);
+          tid = setTimeout(refreshRem, 300);
+        }
+      }, false);
+
+      if (doc.readyState === 'complete') {
+        doc.body.style.fontSize = 12 * dpr + 'px';
+      } else {
+        doc.addEventListener('DOMContentLoaded', function(e) {
+          doc.body.style.fontSize = 12 * dpr + 'px';
+        }, false);
+      }
+
+
+      refreshRem();
+
+      flexible.dpr = win.dpr = dpr;
+      flexible.refreshRem = refreshRem;
+      flexible.rem2px = function(d) {
+        var val = parseFloat(d) * this.rem;
+        if (typeof d === 'string' && d.match(/rem$/)) {
+          val += 'px';
+        }
+        return val;
+      }
+      flexible.px2rem = function(d) {
+        var val = parseFloat(d) / this.rem;
+        if (typeof d === 'string' && d.match(/px$/)) {
+          val += 'rem';
+        }
+        return val;
+      }
+
+    })(window, window['lib'] || (window['lib'] = {}));
+  </script>
+  <style type="text/css">
+    .login {
+      width: 100%;
+      min-height: 8rem;
+    }
+
+    .login .text-input {
+      display: block;
+      box-sizing: border-box;
+      margin: 0.26667rem auto 0;
+      border: 1px solid #ccc;
+      border-radius: 0.13333rem;
+      padding-left: 0.96rem;
+      width: 90%;
+      height: 1.17333rem;
+      color: #ccc;
+    }
+
+    .login .input-wrap {
+      position: relative;
+    }
+
+    .login .phone-input {
+      display: block;
+      position: absolute;
+      top: 0.29333rem;
+      left: 0.8rem;
+      font-size: 0.53333rem;
+      color: #ccc;
+    }
+
+    .login .pwd-input {
+      display: block;
+      position: absolute;
+      top: 1.73333rem;
+      left: 0.8rem;
+      font-size: 0.53333rem;
+      color: #ccc;
+    }
+
+    .login .pwd-wrap {
+      overflow: hidden;
+      margin: 0.26667rem auto;
+      width: 90%;
+      font-size: 0.37333rem;
+      color: #666;
+    }
+
+    .login .box-input {
+      margin-right: 0.13333rem;
+      vertical-align: middle;
+    }
+
+    .login .l-pwd {
+      float: left;
+      width: 50%;
+    }
+
+    .login .r-pwd {
+      float: right;
+      width: 50%;
+      text-align: right;
+      color: #01b76d;
+    }
+
+    .login .login-img {
+      width: 100%;
+    }
+
+    .login .register {
+      display: block;
+      border: 1px solid #01b76d;
+      border-radius: 0.13333rem;
+      margin: 0.26667rem auto 0;
+      width: 90%;
+      height: 1.17333rem;
+      text-align: center;
+      line-height: 1.17333rem;
+      color: #01b76d;
+      font-size: 0.48rem;
+    }
+  </style>
+  <style type="text/css">
+    .btn {
+      background: #01b76d;
+      border-radius: 0.13333rem;
+      margin: 0.26667rem auto 0;
+      width: 90%;
+      height: 1.17333rem;
+      text-align: center;
+      line-height: 1.17333rem;
+      color: #fff;
+      font-size: 0.48rem;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <div class="login page-content"><img src="../img/login.png" class="login-img">
+      <div class="input-wrap">
+        <span class="iconfont phone-input">&#xe604;</span>
+        <input placeholder="请输入手机号码" class="text-input">
+        <span class="iconfont pwd-input">&#xe68e;</span>
+        <input placeholder="密码" type="password" class="text-input">
+      </div>
+      <div class="pwd-wrap">
+        <span class="l-pwd"><input checked="checked" type="checkbox" class="box-input">记住账号密码</span>
+        <a href="/person/forget-pwd" class="r-pwd">忘记密码</a>
+      </div>
+      <div class="btn">立即登陆
+      </div> <a href="/register" class="register">免费注册</a></div>
+  </div>
+  <!-- built files will be auto injected -->
+
+
+</body>
+
+</html>
