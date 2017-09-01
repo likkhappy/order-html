@@ -30,6 +30,7 @@
 }
 .modal-body {
   margin: 0.53333rem 0;
+  color: #999;
 }
 .modal-footer {
   display: box;
@@ -38,6 +39,7 @@
   width: 100%;
 }
 .modal-footer button {
+    background-color: #387ef5;
     box-flex: 1;
     flex: 1;
     display: block;
@@ -48,7 +50,6 @@
     color: #999;
 }
 .modal-footer button:first-child {
-      border-right: 1px solid #cdc7c7;
       color: #fff;
 }
 .modal-footer.border-none {
@@ -65,4 +66,12 @@
 .ok {
   background: #387ef5;
   color: #fff;
+}
+
+.modal-wrapper {
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    margin-top: -2rem;
+    margin-left: -4.8rem;
 }

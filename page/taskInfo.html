@@ -1,0 +1,360 @@
+<html data-dpr="1" style="font-size: 37.5px;">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge chrome=1">
+  <meta name="renderer" content="webkit">
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1">
+  <meta content="telephone=no" name="format-detection">
+  <title>order</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/footer.css">
+  <link rel="stylesheet" href="../css/navigator.css">
+  <link rel="stylesheet" href="../css/modal.css">
+
+  <script>
+    ;
+    (function(win, lib) {
+      var doc = win.document;
+      var docEl = doc.documentElement;
+      var metaEl = doc.querySelector('meta[name="viewport"]');
+      var flexibleEl = doc.querySelector('meta[name="flexible"]');
+      var dpr = 0;
+      var scale = 0;
+      var tid;
+      var flexible = lib.flexible || (lib.flexible = {});
+
+      if (metaEl) {
+        console.warn('将根据已有的meta标签来设置缩放比例');
+        var match = metaEl.getAttribute('content').match(/initial\-scale=([\d\.]+)/);
+        if (match) {
+          scale = parseFloat(match[1]);
+          dpr = parseInt(1 / scale);
+        }
+      } else if (flexibleEl) {
+        var content = flexibleEl.getAttribute('content');
+        if (content) {
+          var initialDpr = content.match(/initial\-dpr=([\d\.]+)/);
+          var maximumDpr = content.match(/maximum\-dpr=([\d\.]+)/);
+          if (initialDpr) {
+            dpr = parseFloat(initialDpr[1]);
+            scale = parseFloat((1 / dpr).toFixed(2));
+          }
+          if (maximumDpr) {
+            dpr = parseFloat(maximumDpr[1]);
+            scale = parseFloat((1 / dpr).toFixed(2));
+          }
+        }
+      }
+
+      if (!dpr && !scale) {
+        var isAndroid = win.navigator.appVersion.match(/android/gi);
+        var isIPhone = win.navigator.appVersion.match(/iphone/gi);
+        var devicePixelRatio = win.devicePixelRatio;
+        if (isIPhone) {
+          // iOS下，对于2和3的屏，用2倍的方案，其余的用1倍方案
+          if (devicePixelRatio >= 3 && (!dpr || dpr >= 3)) {
+            dpr = 3;
+          } else if (devicePixelRatio >= 2 && (!dpr || dpr >= 2)) {
+            dpr = 2;
+          } else {
+            dpr = 1;
+          }
+        } else {
+          // 其他设备下，仍旧使用1倍的方案
+          dpr = 1;
+        }
+        scale = 1 / dpr;
+      }
+
+      docEl.setAttribute('data-dpr', dpr);
+      if (!metaEl) {
+        metaEl = doc.createElement('meta');
+        metaEl.setAttribute('name', 'viewport');
+        metaEl.setAttribute('content', 'initial-scale=' + scale + ', maximum-scale=' + scale + ', minimum-scale=' + scale + ', user-scalable=no');
+        if (docEl.firstElementChild) {
+          docEl.firstElementChild.appendChild(metaEl);
+        } else {
+          var wrap = doc.createElement('div');
+          wrap.appendChild(metaEl);
+          doc.write(wrap.innerHTML);
+        }
+      }
+
+      function refreshRem() {
+        var width = docEl.getBoundingClientRect().width;
+        if (width / dpr > 540) {
+          width = 540 * dpr;
+        }
+        var rem = width / 10;
+        docEl.style.fontSize = rem + 'px';
+        flexible.rem = win.rem = rem;
+      }
+
+      win.addEventListener('resize', function() {
+        clearTimeout(tid);
+        tid = setTimeout(refreshRem, 300);
+      }, false);
+      win.addEventListener('pageshow', function(e) {
+        if (e.persisted) {
+          clearTimeout(tid);
+          tid = setTimeout(refreshRem, 300);
+        }
+      }, false);
+
+      if (doc.readyState === 'complete') {
+        doc.body.style.fontSize = 12 * dpr + 'px';
+      } else {
+        doc.addEventListener('DOMContentLoaded', function(e) {
+          doc.body.style.fontSize = 12 * dpr + 'px';
+        }, false);
+      }
+
+
+      refreshRem();
+
+      flexible.dpr = win.dpr = dpr;
+      flexible.refreshRem = refreshRem;
+      flexible.rem2px = function(d) {
+        var val = parseFloat(d) * this.rem;
+        if (typeof d === 'string' && d.match(/rem$/)) {
+          val += 'px';
+        }
+        return val;
+      }
+      flexible.px2rem = function(d) {
+        var val = parseFloat(d) / this.rem;
+        if (typeof d === 'string' && d.match(/px$/)) {
+          val += 'rem';
+        }
+        return val;
+      }
+
+    })(window, window['lib'] || (window['lib'] = {}));
+  </script>
+  <style type="text/css">
+
+
+    .forget-pwd {
+      color: #f30;
+    }
+
+    .query-btn {
+      background: #01b76d;
+      border-radius: 0.13333rem;
+      margin: 0.8rem auto 0 auto;
+      width: 85%;
+      height: 1.17333rem;
+      text-align: center;
+      line-height: 1.17333rem;
+      font-size: 0.48rem;
+      color: #fff;
+    }
+  </style>
+
+  <style type="text/css">
+    .modify-page-wrap {
+        background-color: #fff;
+        padding-bottom: 20px;
+    }
+    .modify-wrap {
+      position: relative;
+      background: #fff;
+      width: 100%;
+      font-size: 0.12rem;
+      color: #666;
+      overflow: hidden;
+      line-height: 0.6rem;
+    }
+
+    .modify-wrap .modify-con {
+      padding-left: 0.53333rem;
+    }
+
+    .modify-wrap .modify-txt {
+      position: absolute;
+      top: 0;
+      right: 1.17333rem;
+    }
+
+    .modify-wrap .icon {
+      position: absolute;
+      top: 0;
+      right: 0.4rem;
+      font-size: 0.48rem;
+      font-weight: bold;
+      color: #666;
+      text-decoration: none;
+    }
+    .modify-wrap .modify-con {
+        padding: 0;
+        width: 100%;
+    }
+    .origin-pwd {
+        width: 100%;
+        font-size:
+    }
+    .span1{
+        float: left;
+        display: inline-block;
+        width: 40%;
+        text-align: right;
+        color: #999;
+    }
+    .span2 {
+        padding-left: 0.3rem;
+        display: block;
+        width: 57%;
+        float: right;
+    }
+    .imglist {
+        padding-top: .1rem;
+    }
+
+    .red {
+        color: #f30;
+    }
+    .text-tip {
+        background-color: #ffefd7;
+        padding: 0.5rem;
+    }
+
+    .txt-stress {
+        color: #f30;
+        font-size: 0.32158rem;
+        font-weight: bold;
+    }
+    .txt-def {
+        color: #999;
+    }
+    .img-f {
+        margin-right: 0.1rem;
+        vertical-align: middle;
+    }
+  </style>
+</head>
+
+<body style="font-size: 12px;">
+  <div>
+    <div id="app" class="page-content">
+      <section class="banner"><img src="../img/apptopmstj.png" class="bar-img"></section>
+      <div class="logi-pwd-page page-content">
+        <section class="navigator second"><span class="iconfont icon">&#xe701;</span>
+          <div class="title-wrap"><span class="title">任务详情</span> </div>
+        </section>
+        <div class="modify-page-wrap">
+
+        <div class="modify-wrap">
+          <div class="modify-con">
+            <div class="origin-pwd"><span class="span1">任务编号:</span> <span class="span2">42338-1504147050829-87701</span></div>
+          </div>
+        </div>
+        <div class="modify-wrap">
+          <div class="modify-con">
+            <div class="origin-pwd"><span class="span1">任务类型:</span> <span class="span2 red">预售任务</span></div>
+          </div>
+        </div>
+        <div class="modify-wrap">
+          <div class="modify-con">
+            <div class="origin-pwd"><span class="span1">下单入口:</span> <span class="span2">手机端</span></div>
+          </div>
+        </div>
+        <div class="modify-wrap">
+          <div class="modify-con">
+            <div class="origin-pwd"><span class="span1">任务完成时间:</span> <span class="span2">1.25小时内</span></div>
+          </div>
+        </div>
+        <div class="modify-wrap">
+          <div class="modify-con">
+            <div class="origin-pwd">
+                <span class="span1">卖号最低要求:</span>
+                <p class="span2 imglist">
+                    <img src="../img/b_red_2.gif">
+                </p>
+            </div>
+          </div>
+        </div>
+        <div class="modify-wrap">
+          <div class="modify-con">
+            <div class="origin-pwd"><span class="span1">进入商品详情方式:</span> <span class="span2">搜索关键词</span></div>
+          </div>
+        </div>
+        <div class="modify-wrap">
+          <div class="modify-con">
+            <div class="origin-pwd">
+                <span class="span1">任务提要:</span>
+                <p class="span2 imglist">
+                    <img src="../img/bi.png">
+                    <img src="../img/zhu.png">
+                    <img src="../img/ping.png">
+                    <img src="../img/scbb-def.png">
+                    <img src="../img/scdp-def.png">
+                    <img src="../img/tjgwc-def.png">
+                </p>
+            </div>
+          </div>
+        </div>
+        <div class="modify-wrap">
+          <div class="modify-con">
+            <div class="origin-pwd"><span class="span1">商家留言备忘录:</span>
+                <span class="span2">请先加qq扣扣：3301561640  可以用花呗付款
+                    审核小号 ,删评价，违规号不要接,私自做的 拒绝反本金和佣金
+                    第一天 深度浏览店铺 收藏 加购 关注 每个截图要间隔2分钟以上
+                    第二天在猜你喜欢截图 给我的 额外多给3元佣金
+                    付款前必须取消农村淘宝配送和上门安装服务！
+                </span>
+            </div>
+          </div>
+        </div>
+        <div class="modify-wrap">
+          <div class="modify-con">
+            <div class="origin-pwd"><span class="span1">付款方式:</span> <span class="span2">可以使用花呗，信用卡等付款，也可以不用</span></div>
+          </div>
+        </div>
+        <div class="modify-wrap">
+          <div class="modify-con">
+            <div class="origin-pwd"><span class="span1">货款返款时间:</span> <span class="span2 red">本单货款需在完成任务（收到佣金）时返还，经过实名认证且累积完成10单任务（收到佣金）后，才可享受货款立返</span></div>
+          </div>
+        </div>
+
+        <div class="query-btn">抢此任务</div>
+        </div>
+        <div class="text-tip">
+            <p class="txt-stress">任务不按时完成有什么后果？</p>
+            <p class="txt-def">如果任务超时，该任务将会失效并释放回任务大厅，一天内3次任务超时，将取消当日接单资格。</p>
+            <br>
+            <p class="txt-stress">任务提要图标的文字说明：</p>
+            <p class="txt-def"><img class="img-f" src="../img/zhu.png" alt="" class="lf mg-tp3 mg-rt5"><span class="lf">主浏览器浏览见底</span></p>
+            <p class="txt-def"><img class="img-f" src="../img/ci.png" alt="" class="lf mg-tp3 mg-rt5"><span class="lf">浏览店内其他宝贝</span></p>
+            <p class="txt-def"><img class="img-f" src="../img/liao.png" alt="" class="lf mg-tp3 mg-rt5"><span class="lf">旺旺聊天</span></p>
+            <p class="txt-def"><img class="img-f" src="../img/ping.png" alt="" class="lf mg-tp3 mg-rt5"><span class="lf">评价浏览</span></p>
+            <p class="txt-def"><img class="img-f" src="../img/bi.png" alt="" class="lf mg-tp3 mg-rt5"><span class="lf">货比三家</span></p>
+            <p class="txt-def"><img class="img-f" src="../img/scbb-def.png" alt="" class="lf mg-tp3 mg-rt5"><span class="lf">宝贝收藏</span></p>
+            <p class="txt-def"><img class="img-f" src="../img/scdp-def.png" alt="" class="lf mg-tp3 mg-rt5"><span class="lf">店铺收藏</span></p>
+            <p class="txt-def"><img class="img-f" src="../img/twhp.png" alt="" class="lf mg-tp3 mg-rt5"><span class="lf">图文好评</span></p>
+            <p class="txt-def"><img class="img-f" src="../img/wzhp.png" alt="" class="lf mg-tp3 mg-rt5"><span class="lf">文字好评</span></p>
+            <p class="txt-def"><img class="img-f" src="../img/xyzp.png" alt="" class="lf mg-tp3 mg-rt5"><span class="lf">需要追评</span></p>
+        </div>
+        <div transition="modal" class="modal-mask home-modal" style="display: block;">
+          <div class="modal-wrapper">
+            <div class="modal-container">
+              <p class="modal-header">提示</p>
+              <p class="modal-body">抢单成功！现在去做任务记得按要求操作哦，不然是拿不到佣金的！</p>
+              <div class="modal-footer border-none">
+                <button class="modal-default-button modal-button-ok border-none">
+                    Ok
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <section class="footer"><a href="/home" class="item"><span class="text home iconfont">首页</span></a> <a href="/task" class="item"><span class="text task iconfont">任务</span></a> <a href="/person" class="item router-link-active"><span class="text my iconfont">我的</span></a></section>
+    </div>
+  </div>
+  <!-- built files will be auto injected -->
+
+
+</body>
+
+</html>
