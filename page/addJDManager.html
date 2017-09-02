@@ -456,29 +456,15 @@
             <div class="upload-img">
               <span class="iconfont">&#xe620;</span>
               <input type="file">
+              <img style="display:none;">
             </div>
           </div>
           <div class="example-box">
             <div class="example-box">
               <div class="box-modal">
                 <div class="small-img"><img src="../img/jd-accout-level.jpg"></div>
+                <div class="all-img" style="display:none;"><img src="../img/jd-accout-level.jpg"></div>
                 <div class="def-txt">示例图</div>
-              </div>
-
-              <div transition="modal" class="modal-mask" style="display: none;">
-                <div class="modal-wrapper">
-                  <div class="modal-container" style="display: none;">
-                    Tips
-                    <div class="modal-footer border-none">
-                      <button class="modal-default-button modal-button-ok border-none" style="display: none;">
-                          Ok
-                      </button>
-                      <button class="modal-default-button modal-button-cancel" style="display: none;">
-                          Cancel
-                      </button>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
@@ -495,6 +481,7 @@
             <div class="upload-img">
               <span class="iconfont">&#xe620;</span>
               <input type="file">
+              <img style="display:none;">
             </div>
           </div>
           <div class="example-box">
@@ -502,22 +489,6 @@
               <div class="box-modal">
                 <div class="small-img"><img src="../img/jdzh.png"></div>
                 <div class="def-txt">示例图</div>
-              </div>
-
-              <div transition="modal" class="modal-mask" style="display: none;">
-                <div class="modal-wrapper">
-                  <div class="modal-container" style="display: none;">
-                    Tips
-                    <div class="modal-footer border-none">
-                      <button class="modal-default-button modal-button-ok border-none" style="display: none;">
-                          Ok
-                      </button>
-                      <button class="modal-default-button modal-button-cancel" style="display: none;">
-                          Cancel
-                      </button>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
@@ -566,23 +537,7 @@
                 <div class="def-txt">示例图</div>
               </div>
 
-              <div transition="modal" class="modal-mask" style="display: none;">
-                <div class="modal-wrapper">
-                  <div class="modal-container" style="display: none;">
-                    Tips
 
-
-                    <div class="modal-footer border-none">
-                      <button class="modal-default-button modal-button-ok border-none" style="display: none;">
-                          Ok
-                      </button>
-                      <button class="modal-default-button modal-button-cancel" style="display: none;">
-                          Cancel
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
           <p class="def-tip">截图位置：手机京东App-我的-点击头像</p>
@@ -593,10 +548,59 @@
         <p class="imp p-imp">账号审核时间：周一至周六9:00-21:00</p> <img src="../img/jdzh.png" class="show-jd-img" style="display: none;"></div>
       <section class="footer"><a href="/home" class="item"><span class="text home iconfont">首页</span></a> <a href="/task" class="item"><span class="text task iconfont">任务</span></a> <a href="/person" class="item router-link-active"><span class="text my iconfont">我的</span></a></section>
     </div>
+    <div transition="modal" class="modal-mask" style="display: none;">
+      <div class="modal-wrapper">
+        <div class="modal-container" style="display: none;">
+          Tips
+
+
+          <div class="modal-footer border-none">
+            <button class="modal-default-button modal-button-ok border-none" style="display: none;">
+                Ok
+            </button>
+            <button class="modal-default-button modal-button-cancel" style="display: none;">
+                Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
   <!-- built files will be auto injected -->
 
 
 </body>
+<script type="text/jscript" src="../js/exif.js"></script>
+<script type="text/jscript" src="../js/jpeg_encoder_basic.js"></script>
+<script type="text/jscript" src="../js/megapix-image.js"></script>
+<script type="text/jscript" src="../js/html5ImgCompress.js"></script>
+<script type="text/jscript" src="../js/lib/zepto.js"></script>
+<script>
+$('input[type="file"]').change(function() {
+    var self = $(this);
+    new html5ImgCompress(event.target.files[0], {
+      done (file, base64) {
+          var $img = self.parent().find('img');
+          $img.attr('src', base64);
+          $img.css('display' , 'block');
+      }
+    });
+});
 
+$('.def-txt').bind('click', function() {
+    var self = $(this);
+    var parent = self.parent();
+    var bigImg = parent.find('.all-img');
+    bigImg.css('display','block');
+    $('.modal-mask').css('display','block');
+});
+
+$('.all-img').bind('click', function() {
+    var self = $(this);
+    self.css('display', 'none');
+    $('.modal-mask').css('display','none');
+})
+
+
+</script>
 </html>
