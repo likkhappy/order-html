@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1">
+    <meta content="telephone=no" name="format-detection">
+    <title>order</title>
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/footer.css">
+    <link rel="stylesheet" href="../css/navigator.css">
+    <link rel="stylesheet" href="../css/modal.css">
+    <style>
+        body,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        hr,
+        p,
+        blockquote,
+        dl,
+        dt,
+        dd,
+        ul,
+        ol,
+        li,
+        pre,
+        form,
+        fieldset,
+        legend,
+        button,
+        input,
+        textarea,
+        th,
+        td {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #f8f8f8;
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-size: 100%;
+        }
+
+        address,
+        cite,
+        dfn,
+        em,
+        var,
+        i {
+            font-style: normal;
+        }
+
+        code,
+        kbd,
+        pre,
+        samp {
+            font-family: arial, courier new, courier, "\5b8b\4f53", monospace;
+        }
+
+        small {
+            font-size: 12px;
+        }
+
+
+        ul,
+        ol,
+        li {
+            list-style: none;
+        }
+
+
+        sub,
+        sup {
+            font-size: 75%;
+            line-height: 0;
+            position: relative;
+            vertical-align: baseline;
+        }
+
+        sup {
+            top: -0.5em;
+        }
+
+        sub {
+            bottom: -0.25em;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+
+        legend {
+            color: #000;
+        }
+        /* for ie6 */
+
+        fieldset,
+        img {
+            border: 0;
+        }
+
+        button,
+        input,
+        select,
+        textarea {
+            font-size: 100%;
+        }
+
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        a,
+        input:focus {
+            outline: none;
+        }
+
+        article,
+        aside,
+        details,
+        figcaption,
+        figure,
+        footer,
+        header,
+        hgroup,
+        main,
+        menu,
+        nav,
+        section,
+        summary {
+            display: block;
+        }
+
+
+        @font-face {
+            font-family: 'iconfont';
+            /* project id 372332 */
+            src: url('//at.alicdn.com/t/font_372332_g5agxl9utvgqfr.eot');
+            src: url('//at.alicdn.com/t/font_372332_g5agxl9utvgqfr.eot?#iefix') format('embedded-opentype'),
+            url('//at.alicdn.com/t/font_372332_g5agxl9utvgqfr.woff') format('woff'),
+            url('//at.alicdn.com/t/font_372332_g5agxl9utvgqfr.ttf') format('truetype'),
+            url('//at.alicdn.com/t/font_372332_g5agxl9utvgqfr.svg#iconfont') format('svg');
+        }
+
+        .iconfont {
+            font-family: "iconfont" !important;
+            font-size: 16px;
+            font-style: normal;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+    </style>
+    <script>
+        ;
+        (function(win, lib) {
+            var doc = win.document;
+            var docEl = doc.documentElement;
+            var metaEl = doc.querySelector('meta[name="viewport"]');
+            var flexibleEl = doc.querySelector('meta[name="flexible"]');
+            var dpr = 0;
+            var scale = 0;
+            var tid;
+            var flexible = lib.flexible || (lib.flexible = {});
+
+            if (metaEl) {
+                console.warn('将根据已有的meta标签来设置缩放比例');
+                var match = metaEl.getAttribute('content').match(/initial\-scale=([\d\.]+)/);
+                if (match) {
+                    scale = parseFloat(match[1]);
+                    dpr = parseInt(1 / scale);
+                }
+            } else if (flexibleEl) {
+                var content = flexibleEl.getAttribute('content');
+                if (content) {
+                    var initialDpr = content.match(/initial\-dpr=([\d\.]+)/);
+                    var maximumDpr = content.match(/maximum\-dpr=([\d\.]+)/);
+                    if (initialDpr) {
+                        dpr = parseFloat(initialDpr[1]);
+                        scale = parseFloat((1 / dpr).toFixed(2));
+                    }
+                    if (maximumDpr) {
+                        dpr = parseFloat(maximumDpr[1]);
+                        scale = parseFloat((1 / dpr).toFixed(2));
+                    }
+                }
+            }
+
+            if (!dpr && !scale) {
+                var isAndroid = win.navigator.appVersion.match(/android/gi);
+                var isIPhone = win.navigator.appVersion.match(/iphone/gi);
+                var devicePixelRatio = win.devicePixelRatio;
+                if (isIPhone) {
+                    // iOS下，对于2和3的屏，用2倍的方案，其余的用1倍方案
+                    if (devicePixelRatio >= 3 && (!dpr || dpr >= 3)) {
+                        dpr = 3;
+                    } else if (devicePixelRatio >= 2 && (!dpr || dpr >= 2)) {
+                        dpr = 2;
+                    } else {
+                        dpr = 1;
+                    }
+                } else {
+                    // 其他设备下，仍旧使用1倍的方案
+                    dpr = 1;
+                }
+                scale = 1 / dpr;
+            }
+
+            docEl.setAttribute('data-dpr', dpr);
+            if (!metaEl) {
+                metaEl = doc.createElement('meta');
+                metaEl.setAttribute('name', 'viewport');
+                metaEl.setAttribute('content', 'initial-scale=' + scale + ', maximum-scale=' + scale + ', minimum-scale=' + scale + ', user-scalable=no');
+                if (docEl.firstElementChild) {
+                    docEl.firstElementChild.appendChild(metaEl);
+                } else {
+                    var wrap = doc.createElement('div');
+                    wrap.appendChild(metaEl);
+                    doc.write(wrap.innerHTML);
+                }
+            }
+
+            function refreshRem() {
+                var width = docEl.getBoundingClientRect().width;
+                if (width / dpr > 540) {
+                    width = 540 * dpr;
+                }
+                var rem = width / 10;
+                docEl.style.fontSize = rem + 'px';
+                flexible.rem = win.rem = rem;
+            }
+
+            win.addEventListener('resize', function() {
+                clearTimeout(tid);
+                tid = setTimeout(refreshRem, 300);
+            }, false);
+            win.addEventListener('pageshow', function(e) {
+                if (e.persisted) {
+                    clearTimeout(tid);
+                    tid = setTimeout(refreshRem, 300);
+                }
+            }, false);
+
+            if (doc.readyState === 'complete') {
+                doc.body.style.fontSize = 12 * dpr + 'px';
+            } else {
+                doc.addEventListener('DOMContentLoaded', function(e) {
+                    doc.body.style.fontSize = 12 * dpr + 'px';
+                }, false);
+            }
+
+
+            refreshRem();
+
+            flexible.dpr = win.dpr = dpr;
+            flexible.refreshRem = refreshRem;
+            flexible.rem2px = function(d) {
+                var val = parseFloat(d) * this.rem;
+                if (typeof d === 'string' && d.match(/rem$/)) {
+                    val += 'px';
+                }
+                return val;
+            }
+            flexible.px2rem = function(d) {
+                var val = parseFloat(d) / this.rem;
+                if (typeof d === 'string' && d.match(/px$/)) {
+                    val += 'rem';
+                }
+                return val;
+            }
+
+        })(window, window['lib'] || (window['lib'] = {}));
+    </script>
+
+    <style type="text/css">
+        .info-page .certify-txt {
+            font-size: 0.37333rem;
+            color: #f30;
+        }
+
+        .info-page .certify-txt:before {
+            margin-right: 0.13333rem;
+            font-size: 0.69333rem;
+            color: #01b76d;
+            vertical-align: bottom;
+            content: '\E63C';
+        }
+
+        .info-page .card {
+            width: 50%;
+        }
+
+        .info-page .bank-select {
+            background: #fff;
+            appearance: none;
+            border: none;
+            width: 70%;
+            height: 1.17333rem;
+            outline: none;
+        }
+
+        .info-page .btn-wrap {
+            margin-top: 1.06667rem;
+        }
+
+        .info-page .modify-list {
+            margin-top: 0.53333rem;
+        }
+
+        .info-page .show-b {
+            border-bottom: 1px solid #f9f9f9;
+        }
+    </style>
+
+    <style type="text/css">
+        .light-bar {
+            background: #ebfff6;
+            padding: 0 0.53333rem;
+            height: 1.28rem;
+            line-height: 1.28rem;
+            font-size: 0.48rem;
+        }
+
+        .light-bar .left-text {
+            font-size: 0.37333rem;
+            color: #01b76d;
+        }
+
+        .light-bar .right-text {
+            font-size: 0.32rem;
+            color: #999;
+        }
+    </style>
+    <style type="text/css">
+        .modify-wrap {
+            position: relative;
+            background: #fff;
+            width: 100%;
+            height: 1.28rem;
+            line-height: 1.28rem;
+            font-size: 0.37333rem;
+            color: #666;
+        }
+
+        .modify-wrap .modify-con {
+            padding-left: 0.53333rem;
+        }
+
+        .modify-wrap .modify-txt {
+            position: absolute;
+            top: 0;
+            right: 1.17333rem;
+        }
+
+        .modify-wrap .icon {
+            position: absolute;
+            top: 0;
+            right: 0.4rem;
+            font-size: 0.48rem;
+            font-weight: bold;
+            color: #666;
+            text-decoration: none;
+        }
+    </style>
+    <style type="text/css">
+        .btn {
+            background: #01b76d;
+            border-radius: 0.13333rem;
+            margin: 0.26667rem auto 0;
+            width: 90%;
+            height: 1.17333rem;
+            text-align: center;
+            line-height: 1.17333rem;
+            color: #fff;
+            font-size: 0.48rem;
+        }
+    </style>
+</head>
+
+<body style="font-size: 12px;">
+    <div>
+        <div id="app" class="page-content">
+            <section class="banner"><img src="http://localhost:8080/static/img/apptopmstj.45971d0.png" class="bar-img"></section>
+            <div data-v-31b37ec9="" class="info-page page-content">
+                <section class="navigator second"><span class="iconfont icon"></span>
+                    <div class="title-wrap"><span class="title">管理银行卡</span>
+
+                    </div>
+                </section>
+                <section class="light-bar"><span class="left-text">请绑定银行卡：</span> <span class="right-text"></span></section>
+                <div class="modify-wrap show-b">
+                    <div class="modify-con">
+                        <div ><span >持卡人姓名：</span> <input type="text"></div>
+                    </div>
+
+
+                </div>
+                <div class="modify-wrap show-b">
+                    <div class="modify-con">
+                        <div ><span >银行卡号：</span> <input type="text" placeholder="输入卡号，不支持信用卡" class="card"></div>
+                    </div>
+
+
+                </div>
+                <div class="modify-wrap show-b">
+                    <div class="modify-con">
+                        <div ><span >选择银行：</span> <select class="bank-select">
+                            <option value="招商银行">招商银行</option>
+                            <option value="中国工商银行">中国工商银行</option>
+                            <option value="中国农业银行">中国农业银行</option>
+                            <option value="中国建设银行">中国建设银行</option>
+                            <option value="中国银行">中国银行</option>
+                            <option value="中国工商银行">中国工商银行</option>
+                            <option value="兴业银行">兴业银行</option>
+                            <option value="浦发银行">浦发银行</option>
+                            <option value="中信银行">中信银行</option>
+                            <option value="广发银行">广发银行</option>
+                            <option value="民生银行">民生银行</option>
+                            <option value="光大银行">光大银行</option>
+                            <option value="交通银行">交通银行</option>
+                            <option value="中国邮政储蓄银行">中国邮政储蓄银行</option>
+                            <option value="北京银行">北京银行</option>
+                            <option value="渤海银行">渤海银行</option>
+                            <option value="杭州银行">杭州银行</option>
+                            <option value="华夏银行">华夏银行</option>
+                            <option value="汇丰银行">汇丰银行</option>
+                            <option value="花旗银行">花旗银行</option>
+                            <option value="江苏银行">江苏银行</option>
+                            <option value="浙商银行">浙商银行</option>
+                            <option value="渣打银行">渣打银行</option>
+                            <option value="平安银行">平安银行</option>
+                        </select>
+                    </div>
+                    </div>
+
+
+                </div>
+                <div class="modify-wrap show-b">
+                    <div class="modify-con">
+                        <div ><span >手机号：</span> <input readonly="readonly" type="text" placeholder="17325203701" class="card"></div>
+                    </div>
+
+
+                </div>
+                <div class="modify-wrap show-b">
+                    <div class="modify-con">
+                        <div ><span >图片验证码：</span></div>
+                    </div>
+
+
+                </div>
+                <div class="modify-wrap show-b">
+                    <div class="modify-con">
+                        <div ><span >输入验证码：</span></div>
+                    </div>
+
+
+                </div>
+                <div class="btn-wrap">
+                    <div data-v-94ca5c46="" class="btn">确认绑定
+                    </div>
+                </div>
+            </div>
+            <section class="footer"><a href="/home" class="item"><span class="text home iconfont">首页</span></a> <a href="/task" class="item"><span class="text task iconfont">任务</span></a> <a href="/person" class="item router-link-active"><span class="text my iconfont">我的</span></a></section>
+        </div>
+    </div>
+
+
+</body>
+
+</html>
