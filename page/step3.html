@@ -151,6 +151,124 @@
       color: #fff;
     }
   </style>
+  <style type="text/css">
+      .upload-box {
+        float: left;
+        margin-left: 25%;
+        margin-right: 0.53333rem;
+      }
+    .upload-img {
+      position: relative;
+      background: rgba(0, 0, 0, 0.3);
+      width: 2.13333rem;
+      height: 2.13333rem;
+      text-align: center;
+      color: #fff;
+    }
+
+    .upload-img span {
+      line-height: 2.13333rem;
+      font-size: 0.8rem;
+    }
+
+    .upload-img input {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      outline: none;
+      opacity: 0;
+      z-index: 1000;
+    }
+
+    .upload-img img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 10;
+    }
+  </style>
+  <style type="text/css">
+    .example-box {
+      background-size: cover;
+      background-position: center;
+      width: 2.13333rem;
+      height: 2.13333rem;
+      overflow: hidden;
+    }
+
+    .example-box .box-modal {
+      position: relative;
+    }
+
+    .example-box .def-txt {
+      position: relative;
+      background: rgba(0, 0, 0, 0.3);
+      z-index: 2;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      text-align: center;
+      line-height: 2.13333rem;
+      font-size: 0.4rem;
+      color: #fff;
+    }
+
+    .example-box .small-img {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      text-align: center;
+      line-height: 2.13333rem;
+      font-size: 0.4rem;
+      color: #fff;
+    }
+
+    .example-box .small-img img {
+      width: 100%;
+      height: 100%;
+    }
+
+    .example-box .all-img {
+      position: fixed;
+      width: 100%;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 30002;
+    }
+
+    .example-box .all-img img {
+      width: 100%;
+    }
+
+    .example-box .all-img img.middle-img {
+      transform: translateY(50%);
+    }
+
+    .btn {
+      background: #01b76d;
+      border-radius: 0.13333rem;
+      margin: 0.26667rem auto 0;
+      width: 90%;
+      height: 1.17333rem;
+      text-align: center;
+      line-height: 1.17333rem;
+      color: #fff;
+      font-size: 0.48rem;
+    }
+  </style>
 
   <style type="text/css">
     .modify-page-wrap {
@@ -168,6 +286,23 @@
       line-height: 0.6rem;
     }
 
+    .modify-wrap-input {
+        position: relative;
+        background: #fff;
+        font-size: 0.12rem;
+        color: #666;
+        overflow: hidden;
+        line-height: 1.6rem;
+        padding-left: .4rem;
+        color: #ccc;
+    }
+    .modify-wrap-input input {
+        width: 60%;
+        height: 1rem;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        padding-left: 10px;
+    }
     .modify-wrap .modify-con {
       padding-left: 0.53333rem;
     }
@@ -244,6 +379,57 @@
         line-height: 1.5rem;
         font-size: 0.4rem;
     }
+    .imp-wrap-left {
+        box-sizing: border-box;
+        text-align: left;
+        padding-left: .6rem;
+    }
+
+    .example-test-img {
+        width: 5rem;
+        height: 5rem;
+        display: block;
+        margin: 0.5rem auto;
+    }
+    .no-fund-wrap {
+        text-align: center;
+        line-height: 1.0rem;
+    }
+    .no-fund {
+        color: #f30;
+        text-decoration: underline;
+    }
+    .light-con {
+        margin: .4rem 0;
+    }
+    .def-tip {
+        color: #999;
+        font-size: 0.34rem;
+        padding-left: 0.6rem;
+        line-height: 0.8rem;
+    }
+    .def-small-tip {
+        color: #999;
+        font-size: 0.1rem;
+        line-height: 0.8rem;
+        text-align: center;
+    }
+    .p-a {
+         color: #f30;
+         float: right;
+         margin-right: .6rem;
+         text-decoration: underline;
+    }
+    .def-radio {
+        display: inline-block;
+    }
+    .modal-button-cancel {
+        background: #f0f0f0;
+        color: #000;
+    }
+    .modal-button-ok {
+        color: #fff;
+    }
   </style>
 </head>
 
@@ -263,6 +449,7 @@
             </div>
             <div class="imp-wrap">目标宝贝</div>
             <div class="modify-page-wrap">
+                <img class="example-test-img" src="../img/test1.png">
             <div class="modify-wrap">
               <div class="modify-con">
                 <div class="origin-pwd"><span class="span1">店铺名称:</span> <span class="span2">索友***舰店</span></div>
@@ -280,27 +467,264 @@
             </div>
             <div class="modify-wrap">
               <div class="modify-con">
-                <div class="origin-pwd"><span class="span1">注意事项:</span> <span class="span2"></span></div>
+                <div class="origin-pwd">
+                    <span class="span1">注意事项:</span>
+                    <span class="span2">
+                        请先加qq扣扣：3301561640  可以用花呗付款
+                        审核小号 ,删评价，违规号不要接,私自做的 拒绝反本金和佣金
+                        第一天 深度浏览店铺 收藏 加购 关注 每个截图要间隔2分钟以上
+                        第二天在猜你喜欢截图 给我的 额外多给3元佣金
+                        付款前必须取消农村淘宝配送和上门安装服务！
+                    </span>
+                    </div>
               </div>
             </div>
+            <p class="no-fund-wrap">
+                <a href="#" class="no-fund">找不到宝贝？可关闭任务</a>
+            </p>
+            <div class="imp-wrap">验证是否找对店铺</div>
+
+            <div class="modify-wrap-input">
+              <div class="modify-con">
+                <div class="origin-pwd">
+                    <span>店铺名/旺旺名:</span>
+                    <input placeholder="请输入店铺名称或者卖家旺旺名">
+                </div>
+              </div>
+            </div>
+            <div class="query-btn" style="margin-bottom:0.2rem;">验证</div>
+            <div class="imp-wrap">宝贝位置截图</div>
+            <div class="light-con">
+                <div class="upload-box">
+                  <div class="upload-img">
+                    <span class="iconfont">&#xe620;</span>
+                    <input type="file">
+                    <img style="display:none;">
+                  </div>
+                </div>
+                <div class="example-box">
+                  <div class="example-box">
+                    <div class="box-modal">
+                      <div class="small-img"><img src="../img/search_sample.png"></div>
+                      <div class="all-img" style="display:none;"><img src="../img/search_sample.png"></div>
+                      <div class="def-txt">示例图</div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+
+            <div class="imp-wrap imp-wrap-left">货比三家每个1分钟</div>
+            <p class="def-tip">提供3个竞品详情页顶部截图</p>
+            <div class="light-con">
+                <div class="upload-box">
+                  <div class="upload-img">
+                    <span class="iconfont">&#xe620;</span>
+                    <input type="file">
+                    <img style="display:none;">
+                  </div>
+                </div>
+                <div class="example-box">
+                  <div class="example-box">
+                    <div class="box-modal">
+                      <div class="small-img"><img src="../img/hbsjjt.png"></div>
+                      <div class="all-img" style="display:none;"><img src="../img/hbsjjt.png"></div>
+                      <div class="def-txt">示例图</div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <div class="light-con">
+                <div class="upload-box">
+                  <div class="upload-img">
+                    <span class="iconfont">&#xe620;</span>
+                    <input type="file">
+                    <img style="display:none;">
+                  </div>
+                </div>
+                <div class="example-box">
+                  <div class="upload-img">
+                    <span class="iconfont">&#xe620;</span>
+                    <input type="file">
+                    <img style="display:none;">
+                  </div>
+                </div>
+            </div>
+
+            <div class="imp-wrap imp-wrap-left">浏览主宝贝见底，3分钟：</div>
+            <p class="def-tip">提交主宝贝评价截图</p>
+            <div class="light-con">
+                <div class="upload-box">
+                  <div class="upload-img">
+                    <span class="iconfont">&#xe620;</span>
+                    <input type="file">
+                    <img style="display:none;">
+                  </div>
+                </div>
+                <div class="example-box">
+                  <div class="example-box">
+                    <div class="box-modal">
+                      <div class="small-img"><img src="../img/zbbdbjt.png"></div>
+                      <div class="all-img" style="display:none;"><img src="../img/zbbdbjt.png"></div>
+                      <div class="def-txt">示例图</div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+
+            <div class="imp-wrap imp-wrap-left">主宝贝评价浏览，2分钟：</div>
+            <p class="def-tip">提交主宝贝评价截图</p>
+            <div class="light-con">
+                <div class="upload-box">
+                  <div class="upload-img">
+                    <span class="iconfont">&#xe620;</span>
+                    <input type="file">
+                    <img style="display:none;">
+                  </div>
+                </div>
+                <div class="example-box">
+                  <div class="example-box">
+                    <div class="box-modal">
+                      <div class="small-img"><img src="../img/zbbpjjt.png"></div>
+                      <div class="all-img" style="display:none;"><img src="../img/zbbpjjt.png"></div>
+                      <div class="def-txt">示例图</div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+
+            <div class="imp-wrap imp-wrap-left">旺旺聊天：</div>
+            <p class="def-tip">提交旺旺聊天截图</p>
+            <div class="light-con">
+                <div class="upload-box">
+                  <div class="upload-img">
+                    <span class="iconfont">&#xe620;</span>
+                    <input type="file">
+                    <img style="display:none;">
+                  </div>
+                </div>
+                <div class="example-box">
+                  <div class="example-box">
+                    <div class="box-modal">
+                      <div class="small-img"><img src="../img/wwltjt.png"></div>
+                      <div class="all-img" style="display:none;"><img src="../img/wwltjt.png"></div>
+                      <div class="def-txt">示例图</div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+
+            <div class="imp-wrap imp-wrap-left">收藏和加购： </div>
+
+            <p class="def-tip">提交主宝贝收藏截图<a href="#" class="p-a">点击查看如何收藏宝贝?</a></p>
+            <div class="light-con">
+                <div class="upload-box">
+                  <div class="upload-img">
+                    <span class="iconfont">&#xe620;</span>
+                    <input type="file">
+                    <img style="display:none;">
+                  </div>
+                </div>
+                <div class="example-box">
+                  <div class="example-box">
+                    <div class="box-modal">
+                      <div class="small-img"><img src="../img/bbscjt.png"></div>
+                      <div class="all-img" style="display:none;"><img src="../img/bbscjt.png"></div>
+                      <div class="def-txt">示例图</div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <p class="def-small-tip">截图位置：手机淘宝APP-我的淘宝-收藏宝贝</p>
+
+            <p class="def-tip">提交主宝贝加入购物车截图 </p>
+            <div class="light-con">
+                <div class="upload-box">
+                  <div class="upload-img">
+                    <span class="iconfont">&#xe620;</span>
+                    <input type="file">
+                    <img style="display:none;">
+                  </div>
+                </div>
+                <div class="example-box">
+                  <div class="example-box">
+                    <div class="box-modal">
+                      <div class="small-img"><img src="../img/gwcjt.png"></div>
+                      <div class="all-img" style="display:none;"><img src="../img/gwcjt.png"></div>
+                      <div class="def-txt">示例图</div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <p class="def-small-tip">截图位置：手机淘宝APP-购物车</p>
+
+            <p class="def-tip">提交店铺收藏截图 <a href="#" class="p-a">点击查看如何收藏店铺?</a></p>
+            <div class="light-con">
+                <div class="upload-box">
+                  <div class="upload-img">
+                    <span class="iconfont">&#xe620;</span>
+                    <input type="file">
+                    <img style="display:none;">
+                  </div>
+                </div>
+                <div class="example-box">
+                  <div class="example-box">
+                    <div class="box-modal">
+                      <div class="small-img"><img src="../img/dpscjt.png"></div>
+                      <div class="all-img" style="display:none;"><img src="../img/dpscjt.png"></div>
+                      <div class="def-txt">示例图</div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <p class="def-small-tip">截图位置：手机淘宝APP-我的淘宝-收藏宝贝-店铺(顶部页签)</p>
         </div>
+
             <div class="def-wrap">
                 <p class="txt-def">任务完成倒计时：<span class="red">27:09</span></p>
-                <p class="txt-stress">重要提醒：</p>
-                <p class="txt-stress">1.不按商家要求关键词进店的，一经发现扣除佣金</p>
-                <p class="txt-stress">2.禁止使用淘宝客！将扣除任何佣金及淘客佣金所得</p>
+                <p class="txt-stress">此步骤必须足时浏览，一旦商家举报，扣除刷手佣金。</p>
+                <p class="txt-stress">注意：请保留收藏和加购3天以上</p>
             </div>
 
             <div class="query-btn">下一步</div>
         </div>
         <div class="text-tip">
-            <p class="txt-stress">找不到宝贝怎么办？</p>
+            <p class="txt-stress">什么是货比三家？</p>
             <p class="txt-def">
-                1.由于千人千面的影响，每个人看到的宝贝排位是不一样的，因此再多翻几页耐心寻找
+                1.在搜索结果页，寻找目标宝贝附近的3个其他竞争宝贝进行浏览。
             </p>
             <p class="txt-def">
-                2.实在找不到，可以返回“我的任务”，对任务进行关闭！
+                2.需要点击打开竞品的宝贝详情页
             </p>
+        </div>
+        <div class="text-tip">
+            <p class="txt-stress">为什么要浏览足时？</p>
+            <p class="txt-def">
+                1，浏览时间过短，不仅会使商家处于被处罚的风险境地，也会使自己的账号有被封禁的危险。
+            </p>
+        </div>
+        <div id="close-task" transition="modal" class="modal-mask home-modal" style="display: none;">
+          <div class="modal-wrapper">
+            <div class="modal-container">
+              <p class="modal-header">确定关闭任务？</p>
+              <div class="modal-body">
+                  <div>
+                      <p><input class="def-radio" type="radio" checked>没时间做，做不了了</p>
+                      <p><input class="def-radio" type="radio">找不到宝贝</p>
+                      <p><input class="def-radio" type="radio">实际价格高于货款</p>
+                      <p><input class="def-radio" type="radio">其他原因（已和商家协商过了）</p>
+                  </div>
+                  <p class="txt-stress">注：关闭任务不减今日接单次数</p>
+              </div>
+              <div class="modal-footer border-none">
+                <button class="modal-default-button modal-button-cancel js-close-task-cancel">
+                    取消
+                </button>
+                <button class="modal-default-button modal-button-ok ok js-close-task-ok">
+                    确定
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
         <div transition="modal" class="modal-mask home-modal" style="display: none;">
           <div class="modal-wrapper">
@@ -316,12 +740,56 @@
           </div>
         </div>
       </div>
-      <section class="footer"><a href="/home" class="item"><span class="text home iconfont">首页</span></a> <a href="/task" class="item"><span class="text task iconfont">任务</span></a> <a href="/person" class="item router-link-active"><span class="text my iconfont">我的</span></a></section>
+      <section class="footer">
+          <a href="/home" class="item"><span class="text home iconfont">首页</span></a>
+          <a href="/task" class="item router-link-active"><span class="text task iconfont">任务</span></a>
+          <a href="/person" class="item"><span class="text my iconfont">我的</span></a></section>
     </div>
   </div>
   <!-- built files will be auto injected -->
 
 
 </body>
+<script type="text/jscript" src="../js/exif.js"></script>
+<script type="text/jscript" src="../js/jpeg_encoder_basic.js"></script>
+<script type="text/jscript" src="../js/megapix-image.js"></script>
+<script type="text/jscript" src="../js/html5ImgCompress.js"></script>
+<script type="text/jscript" src="../js/lib/zepto.js"></script>
+<script>
+$('.no-fund').bind('click', function() {
+    $('#close-task').css('display', 'block');
+})
+$('.js-close-task-cancel').bind('click', function() {
+    $('#close-task').css('display', 'none');
+})
+$('.js-close-task-ok').bind('click', function() {
+    $('#close-task').css('display', 'none');
+})
+
+$('input[type="file"]').change(function() {
+    var self = $(this);
+    new html5ImgCompress(event.target.files[0], {
+      done (file, base64) {
+          var $img = self.parent().find('img');
+          $img.attr('src', base64);
+          $img.css('display' , 'block');
+      }
+    });
+});
+
+$('.def-txt').bind('click', function() {
+    var self = $(this);
+    var parent = self.parent();
+    var bigImg = parent.find('.all-img');
+    bigImg.css('display','block');
+    $('.modal-mask').css('display','block');
+});
+
+$('.all-img').bind('click', function() {
+    var self = $(this);
+    self.css('display', 'none');
+    $('.modal-mask').css('display','none');
+})
+</script>
 
 </html>

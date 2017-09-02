@@ -39,7 +39,7 @@
   width: 100%;
 }
 .modal-footer button {
-    background-color: #387ef5;
+    /*background-color: #387ef5;*/
     box-flex: 1;
     flex: 1;
     display: block;
@@ -47,11 +47,11 @@
     padding: 15px 0;
     text-align: center;
     text-decoration: none;
-    color: #999;
+    /*color: #999;*/
 }
-.modal-footer button:first-child {
+/*.modal-footer button:first-child {
       color: #fff;
-}
+}*/
 .modal-footer.border-none {
     border: 0;
 }
