@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="../css/footer.css">
   <link rel="stylesheet" href="../css/navigator.css">
   <link rel="stylesheet" href="../css/modal.css">
-
+  <link rel="stylesheet" href="../css/task.css">
   <script>
     ;
     (function(win, lib) {
@@ -274,25 +274,72 @@
             <div class="all-nav-wrap">
               <div class="all-nav-wrap">
                 <ul>
-                  <li><a href="javascript:void(0);" class="is-active">全部</a></li>
-                  <li><a href="javascript:void(0);" class="">已接手</a></li>
-                  <li><a href="javascript:void(0);" class="">待关闭</a></li>
-                  <li><a href="javascript:void(0);" class="">待发货</a></li>
-                  <li><a href="javascript:void(0);" class="">待评论</a></li>
-                  <li><a href="javascript:void(0);" class="">待返款</a></li>
+                  <li><a href="javascript:void(0);" class="is-active" rel-id="all">全部</a></li>
+                  <li><a href="javascript:void(0);" class="" rel-id="have">已接手</a></li>
+                  <li><a href="javascript:void(0);" class="" rel-id="close">待关闭</a></li>
+                  <li><a href="javascript:void(0);" class="" rel-id="pack">待发货</a></li>
+                  <li><a href="javascript:void(0);" class="" rel-id="comment">待评论</a></li>
+                  <li><a href="javascript:void(0);" class="" rel-id="back">待返款</a></li>
                 </ul>
               </div>
             </div>
           </div>
-        </section> <a href="/person/recommend" class="fix-circle">
-    推荐有奖
-  </a></div>
+        </section>
+        <section class="js-rel" id="all">
+            <div class="task">
+                <div class="task-num">
+                    子任务编号：
+                    <input  readonly="" type="text" value="45919-1504491057874-54308" class="task-tit-inp">
+                    <a href="#" class="task-copy" >复制</a>
+                </div>
+
+              <div class="img-wrap"><img src="http://gd3.alicdn.com/imgextra/i3/385777473/TB2uz9gXjS_LeJjSZFwXXbnnpXa_!!385777473.jpg_150x150.jpg"></div>
+              <div class="task-info">
+                <div class="task-money">
+                    le****内衣
+                    <div class="task-pic">
+                        <span class="iconfont">&#xe61e;</span>
+                        <span class="iconfont">&#xe63a;</span>
+                    </div>
+                 </div>
+                <div class="task-money">买号：车e族网</div>
+                <div class="task-money">垫付货款：28元 佣金：6元</div>
+                <div class="task-money">当前步骤：<span class="cur-step">下单付款</span></div>
+
+              </div>
+              <div class="task-qq">
+                  任务执行有问题？可先联系<span class="imp">商家QQ：2773813207</span>进行沟通
+              </div>
+              <div class="task-btn-list">
+                  <span class="task-b">继续任务</span>
+                  <span class="task-b">关闭任务</span>
+              </div>
+          </div>
+        </section>
+        <section class="js-rel" id="have"></section>
+        <section class="js-rel" id="close"></section>
+        <section class="js-rel" id="pack"></section>
+        <section class="js-rel" id="comment"></section>
+        <section class="js-rel" id="back"></section>
+
+        <a href="/person/recommend" class="fix-circle">推荐有奖</a>
+    </div>
       <section class="footer"><a href="/home" class="item"><span class="text home iconfont">首页</span></a> <a href="/task" class="item router-link-exact-active router-link-active"><span class="text task iconfont">任务</span></a> <a href="/person" class="item"><span class="text my iconfont">我的</span></a></section>
     </div>
   </div>
   <!-- built files will be auto injected -->
+<script type="text/jscript" src="../js/lib/zepto.js"></script>
+<script>
+    $('a[rel-id]').bind('click', function(e) {
+        var self = $(this);
+        var id = self.attr('rel-id');
+        $('a[rel-id]').removeClass('is-active');
+        self.addClass('is-active');
+        $('.js-rel').css('display', 'none');
+        $('#'+id).css('display', 'block');
 
-
+    })
+</script>
 </body>
 
 </html>
