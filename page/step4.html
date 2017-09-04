@@ -134,7 +134,10 @@
   </script>
   <style type="text/css">
 
-
+    .step4-page-wrap {
+        background: #fff;
+        padding-bottom: 0.64rem;
+    }
     .forget-pwd {
       color: #f30;
     }
@@ -142,7 +145,7 @@
     .query-btn {
       background: #01b76d;
       border-radius: 0.13333rem;
-      margin: 0.8rem auto 0 auto;
+      margin: 0.8rem  auto;
       width: 85%;
       height: 1.17333rem;
       text-align: center;
@@ -328,20 +331,24 @@
     }
     .origin-pwd {
         width: 100%;
-        font-size:
+        line-height: 0.68rem;
     }
     .span1{
         float: left;
         display: inline-block;
-        width: 40%;
+        width: 10%;
         text-align: right;
         color: #999;
+    }
+    .span1 input {
+        margin-top: 0.15rem;
     }
     .span2 {
         padding-left: 0.3rem;
         display: block;
-        width: 57%;
+        width: 86%;
         float: right;
+        color: #999;
     }
     .imglist {
         padding-top: .1rem;
@@ -358,7 +365,6 @@
     .txt-stress {
         color: #f30;
         font-size: 0.32158rem;
-        font-weight: bold;
     }
     .txt-def {
         color: #999;
@@ -430,6 +436,28 @@
     .modal-button-ok {
         color: #fff;
     }
+    .input-wrap {
+        padding: 0.32rem;
+    }
+    .input-wrap input {
+        padding: 0.08rem;
+        width: 100%;
+        border: 1px solid #f0f0f0;
+        line-height: 0.64rem;
+    }
+
+    .pay-money {
+        color: #999;
+        padding: 0 0.32rem;
+    }
+    .task-all {
+        padding: 0.32rem;
+        color: #999;
+    }
+
+
+
+
   </style>
 </head>
 
@@ -453,245 +481,56 @@
             <div class="modify-wrap">
               <div class="modify-con">
                 <div class="origin-pwd">
-                    <input type="checkbox">下单账号：车e族网
-                    <span class="span1">店铺名称:</span>
-                     <span class="span2">索友***舰店</span></div>
-              </div>
-            </div>
-            <div class="modify-wrap">
-              <div class="modify-con">
-                <div class="origin-pwd"><span class="span1">商家旺旺:</span> <span class="span2">索友***舰店</span></div>
-              </div>
-            </div>
-            <div class="modify-wrap">
-              <div class="modify-con">
-                <div class="origin-pwd"><span class="span1">价格:</span> <span class="span2">¥999</span></div>
+                    <span class="span1"><input type="checkbox"></span>
+                    <span class="span2">下单账号：车e族网·</span>
+                </div>
               </div>
             </div>
             <div class="modify-wrap">
               <div class="modify-con">
                 <div class="origin-pwd">
-                    <span class="span1">注意事项:</span>
-                    <span class="span2">
-                        请先加qq扣扣：3301561640  可以用花呗付款
-                        审核小号 ,删评价，违规号不要接,私自做的 拒绝反本金和佣金
-                        第一天 深度浏览店铺 收藏 加购 关注 每个截图要间隔2分钟以上
-                        第二天在猜你喜欢截图 给我的 额外多给3元佣金
-                        付款前必须取消农村淘宝配送和上门安装服务！
-                    </span>
-                    </div>
+                    <span class="span1"><input type="checkbox"></span>
+                    <span class="span2">店铺名：les1980束胸内衣</span>
+                </div>
               </div>
             </div>
-            <p class="no-fund-wrap">
-                <a href="#" class="no-fund">找不到宝贝？可关闭任务</a>
-            </p>
-            <div class="imp-wrap">验证是否找对店铺</div>
-
-            <div class="modify-wrap-input">
+            <div class="modify-wrap">
               <div class="modify-con">
                 <div class="origin-pwd">
-                    <span>店铺名/旺旺名:</span>
-                    <input placeholder="请输入店铺名称或者卖家旺旺名">
+                    <span class="span1"><input type="checkbox"></span>
+                    <span class="span2">宝贝价格：28元</span>
                 </div>
               </div>
             </div>
-            <div class="query-btn" style="margin-bottom:0.2rem;">验证</div>
-            <div class="imp-wrap">宝贝位置截图</div>
-            <div class="light-con">
-                <div class="upload-box">
-                  <div class="upload-img">
-                    <span class="iconfont">&#xe620;</span>
-                    <input type="file">
-                    <img style="display:none;">
-                  </div>
+            <div class="modify-wrap">
+              <div class="modify-con">
+                <div class="origin-pwd">
+                    <span class="span1"><input type="checkbox"></span>
+                    <span class="span2">拍下数量：1件</span>
                 </div>
-                <div class="example-box">
-                  <div class="example-box">
-                    <div class="box-modal">
-                      <div class="small-img"><img src="../img/search_sample.png"></div>
-                      <div class="all-img" style="display:none;"><img src="../img/search_sample.png"></div>
-                      <div class="def-txt">示例图</div>
-                    </div>
-                  </div>
+              </div>
+            </div>
+            <div class="modify-wrap">
+              <div class="modify-con">
+                <div class="origin-pwd">
+                    <span class="span1"><input type="checkbox"></span>
+                    <p class="span2">实付总价：28元<a class="no-fund" href="">实付价高了？可以关闭任务</a></p>
                 </div>
+              </div>
+            </div>
+            <div class="modify-wrap">
+              <div class="modify-con">
+                <div class="origin-pwd">
+                    <span class="span1"><input type="checkbox"></span>
+                    <p class="span2">货款返款时间：<span class="txt-stress">本单货款需在完成任务（收到佣金）时返还，
+                        经过实名认证且累积完成10单任务（收到佣金）后，才可享受货款理返</span></p>
+                </div>
+              </div>
             </div>
 
-            <div class="imp-wrap imp-wrap-left">货比三家每个1分钟</div>
-            <p class="def-tip">提供3个竞品详情页顶部截图</p>
-            <div class="light-con">
-                <div class="upload-box">
-                  <div class="upload-img">
-                    <span class="iconfont">&#xe620;</span>
-                    <input type="file">
-                    <img style="display:none;">
-                  </div>
-                </div>
-                <div class="example-box">
-                  <div class="example-box">
-                    <div class="box-modal">
-                      <div class="small-img"><img src="../img/hbsjjt.png"></div>
-                      <div class="all-img" style="display:none;"><img src="../img/hbsjjt.png"></div>
-                      <div class="def-txt">示例图</div>
-                    </div>
-                  </div>
-                </div>
-            </div>
-            <div class="light-con">
-                <div class="upload-box">
-                  <div class="upload-img">
-                    <span class="iconfont">&#xe620;</span>
-                    <input type="file">
-                    <img style="display:none;">
-                  </div>
-                </div>
-                <div class="example-box">
-                  <div class="upload-img">
-                    <span class="iconfont">&#xe620;</span>
-                    <input type="file">
-                    <img style="display:none;">
-                  </div>
-                </div>
-            </div>
-
-            <div class="imp-wrap imp-wrap-left">浏览主宝贝见底，3分钟：</div>
-            <p class="def-tip">提交主宝贝评价截图</p>
-            <div class="light-con">
-                <div class="upload-box">
-                  <div class="upload-img">
-                    <span class="iconfont">&#xe620;</span>
-                    <input type="file">
-                    <img style="display:none;">
-                  </div>
-                </div>
-                <div class="example-box">
-                  <div class="example-box">
-                    <div class="box-modal">
-                      <div class="small-img"><img src="../img/zbbdbjt.png"></div>
-                      <div class="all-img" style="display:none;"><img src="../img/zbbdbjt.png"></div>
-                      <div class="def-txt">示例图</div>
-                    </div>
-                  </div>
-                </div>
-            </div>
-
-            <div class="imp-wrap imp-wrap-left">主宝贝评价浏览，2分钟：</div>
-            <p class="def-tip">提交主宝贝评价截图</p>
-            <div class="light-con">
-                <div class="upload-box">
-                  <div class="upload-img">
-                    <span class="iconfont">&#xe620;</span>
-                    <input type="file">
-                    <img style="display:none;">
-                  </div>
-                </div>
-                <div class="example-box">
-                  <div class="example-box">
-                    <div class="box-modal">
-                      <div class="small-img"><img src="../img/zbbpjjt.png"></div>
-                      <div class="all-img" style="display:none;"><img src="../img/zbbpjjt.png"></div>
-                      <div class="def-txt">示例图</div>
-                    </div>
-                  </div>
-                </div>
-            </div>
-
-            <div class="imp-wrap imp-wrap-left">旺旺聊天：</div>
-            <p class="def-tip">提交旺旺聊天截图</p>
-            <div class="light-con">
-                <div class="upload-box">
-                  <div class="upload-img">
-                    <span class="iconfont">&#xe620;</span>
-                    <input type="file">
-                    <img style="display:none;">
-                  </div>
-                </div>
-                <div class="example-box">
-                  <div class="example-box">
-                    <div class="box-modal">
-                      <div class="small-img"><img src="../img/wwltjt.png"></div>
-                      <div class="all-img" style="display:none;"><img src="../img/wwltjt.png"></div>
-                      <div class="def-txt">示例图</div>
-                    </div>
-                  </div>
-                </div>
-            </div>
-
-            <div class="imp-wrap imp-wrap-left">收藏和加购： </div>
-
-            <p class="def-tip">提交主宝贝收藏截图<a href="#" class="p-a">点击查看如何收藏宝贝?</a></p>
-            <div class="light-con">
-                <div class="upload-box">
-                  <div class="upload-img">
-                    <span class="iconfont">&#xe620;</span>
-                    <input type="file">
-                    <img style="display:none;">
-                  </div>
-                </div>
-                <div class="example-box">
-                  <div class="example-box">
-                    <div class="box-modal">
-                      <div class="small-img"><img src="../img/bbscjt.png"></div>
-                      <div class="all-img" style="display:none;"><img src="../img/bbscjt.png"></div>
-                      <div class="def-txt">示例图</div>
-                    </div>
-                  </div>
-                </div>
-            </div>
-            <p class="def-small-tip">截图位置：手机淘宝APP-我的淘宝-收藏宝贝</p>
-
-            <p class="def-tip">提交主宝贝加入购物车截图 </p>
-            <div class="light-con">
-                <div class="upload-box">
-                  <div class="upload-img">
-                    <span class="iconfont">&#xe620;</span>
-                    <input type="file">
-                    <img style="display:none;">
-                  </div>
-                </div>
-                <div class="example-box">
-                  <div class="example-box">
-                    <div class="box-modal">
-                      <div class="small-img"><img src="../img/gwcjt.png"></div>
-                      <div class="all-img" style="display:none;"><img src="../img/gwcjt.png"></div>
-                      <div class="def-txt">示例图</div>
-                    </div>
-                  </div>
-                </div>
-            </div>
-            <p class="def-small-tip">截图位置：手机淘宝APP-购物车</p>
-
-            <p class="def-tip">提交店铺收藏截图 <a href="#" class="p-a">点击查看如何收藏店铺?</a></p>
-            <div class="light-con">
-                <div class="upload-box">
-                  <div class="upload-img">
-                    <span class="iconfont">&#xe620;</span>
-                    <input type="file">
-                    <img style="display:none;">
-                  </div>
-                </div>
-                <div class="example-box">
-                  <div class="example-box">
-                    <div class="box-modal">
-                      <div class="small-img"><img src="../img/dpscjt.png"></div>
-                      <div class="all-img" style="display:none;"><img src="../img/dpscjt.png"></div>
-                      <div class="def-txt">示例图</div>
-                    </div>
-                  </div>
-                </div>
-            </div>
-            <p class="def-small-tip">截图位置：手机淘宝APP-我的淘宝-收藏宝贝-店铺(顶部页签)</p>
-        </div>
-
-            <div class="def-wrap">
-                <p class="txt-def">任务完成倒计时：<span class="red">27:09</span></p>
-                <p class="txt-stress">此步骤必须足时浏览，一旦商家举报，扣除刷手佣金。</p>
-                <p class="txt-stress">注意：请保留收藏和加购3天以上</p>
-            </div>
-
-            <div class="query-btn">下一步</div>
         </div>
         <div class="text-tip">
-            <p class="txt-stress">什么是货比三家？</p>
+            <p class="txt-stress">特别注意</p>
             <p class="txt-def">
                 1.在搜索结果页，寻找目标宝贝附近的3个其他竞争宝贝进行浏览。
             </p>
@@ -699,49 +538,17 @@
                 2.需要点击打开竞品的宝贝详情页
             </p>
         </div>
-        <div class="text-tip">
-            <p class="txt-stress">为什么要浏览足时？</p>
-            <p class="txt-def">
-                1，浏览时间过短，不仅会使商家处于被处罚的风险境地，也会使自己的账号有被封禁的危险。
-            </p>
+        <div class="imp-wrap imp-wrap-left">下单付款完成后，填入下列信息：</div>
+        <div class="input-wrap">
+            <input placeholder="请输入订单编号">
         </div>
-        <div id="close-task" transition="modal" class="modal-mask home-modal" style="display: none;">
-          <div class="modal-wrapper">
-            <div class="modal-container">
-              <p class="modal-header">确定关闭任务？</p>
-              <div class="modal-body">
-                  <div>
-                      <p><input class="def-radio" type="radio" checked>没时间做，做不了了</p>
-                      <p><input class="def-radio" type="radio">找不到宝贝</p>
-                      <p><input class="def-radio" type="radio">实际价格高于货款</p>
-                      <p><input class="def-radio" type="radio">其他原因（已和商家协商过了）</p>
-                  </div>
-                  <p class="txt-stress">注：关闭任务不减今日接单次数</p>
-              </div>
-              <div class="modal-footer border-none">
-                <button class="modal-default-button modal-button-cancel js-close-task-cancel">
-                    取消
-                </button>
-                <button class="modal-default-button modal-button-ok ok js-close-task-ok">
-                    确定
-                </button>
-              </div>
-            </div>
-          </div>
+        <div class="pay-money">
+            付款金额： <input placeholder="付款金额">元
         </div>
-        <div transition="modal" class="modal-mask home-modal" style="display: none;">
-          <div class="modal-wrapper">
-            <div class="modal-container">
-              <p class="modal-header">提示</p>
-              <p class="modal-body">抢单成功！现在去做任务记得按要求操作哦，不然是拿不到佣金的！</p>
-              <div class="modal-footer border-none">
-                <button class="modal-default-button modal-button-ok border-none">
-                    Ok
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <div class="task-all">任务完成倒计时：<span class="forget-pwd">59:53</span></div>
+        <div class="query-btn">提交审核</div>
+
+
       </div>
       <section class="footer">
           <a href="/home" class="item"><span class="text home iconfont">首页</span></a>
@@ -758,41 +565,6 @@
 <script type="text/jscript" src="../js/megapix-image.js"></script>
 <script type="text/jscript" src="../js/html5ImgCompress.js"></script>
 <script type="text/jscript" src="../js/lib/zepto.js"></script>
-<script>
-$('.no-fund').bind('click', function() {
-    $('#close-task').css('display', 'block');
-})
-$('.js-close-task-cancel').bind('click', function() {
-    $('#close-task').css('display', 'none');
-})
-$('.js-close-task-ok').bind('click', function() {
-    $('#close-task').css('display', 'none');
-})
 
-$('input[type="file"]').change(function() {
-    var self = $(this);
-    new html5ImgCompress(event.target.files[0], {
-      done (file, base64) {
-          var $img = self.parent().find('img');
-          $img.attr('src', base64);
-          $img.css('display' , 'block');
-      }
-    });
-});
-
-$('.def-txt').bind('click', function() {
-    var self = $(this);
-    var parent = self.parent();
-    var bigImg = parent.find('.all-img');
-    bigImg.css('display','block');
-    $('.modal-mask').css('display','block');
-});
-
-$('.all-img').bind('click', function() {
-    var self = $(this);
-    self.css('display', 'none');
-    $('.modal-mask').css('display','none');
-})
-</script>
 
 </html>
