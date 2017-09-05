@@ -1,0 +1,639 @@
+<html data-dpr="1" style="font-size: 37.5px;">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge chrome=1">
+  <meta name="renderer" content="webkit">
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1">
+  <meta content="telephone=no" name="format-detection">
+  <title>order</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/footer.css">
+  <link rel="stylesheet" href="../css/navigator.css">
+  <link rel="stylesheet" href="../css/modal.css">
+
+  <script>
+    ;
+    (function(win, lib) {
+      var doc = win.document;
+      var docEl = doc.documentElement;
+      var metaEl = doc.querySelector('meta[name="viewport"]');
+      var flexibleEl = doc.querySelector('meta[name="flexible"]');
+      var dpr = 0;
+      var scale = 0;
+      var tid;
+      var flexible = lib.flexible || (lib.flexible = {});
+
+      if (metaEl) {
+        console.warn('将根据已有的meta标签来设置缩放比例');
+        var match = metaEl.getAttribute('content').match(/initial\-scale=([\d\.]+)/);
+        if (match) {
+          scale = parseFloat(match[1]);
+          dpr = parseInt(1 / scale);
+        }
+      } else if (flexibleEl) {
+        var content = flexibleEl.getAttribute('content');
+        if (content) {
+          var initialDpr = content.match(/initial\-dpr=([\d\.]+)/);
+          var maximumDpr = content.match(/maximum\-dpr=([\d\.]+)/);
+          if (initialDpr) {
+            dpr = parseFloat(initialDpr[1]);
+            scale = parseFloat((1 / dpr).toFixed(2));
+          }
+          if (maximumDpr) {
+            dpr = parseFloat(maximumDpr[1]);
+            scale = parseFloat((1 / dpr).toFixed(2));
+          }
+        }
+      }
+
+      if (!dpr && !scale) {
+        var isAndroid = win.navigator.appVersion.match(/android/gi);
+        var isIPhone = win.navigator.appVersion.match(/iphone/gi);
+        var devicePixelRatio = win.devicePixelRatio;
+        if (isIPhone) {
+          // iOS下，对于2和3的屏，用2倍的方案，其余的用1倍方案
+          if (devicePixelRatio >= 3 && (!dpr || dpr >= 3)) {
+            dpr = 3;
+          } else if (devicePixelRatio >= 2 && (!dpr || dpr >= 2)) {
+            dpr = 2;
+          } else {
+            dpr = 1;
+          }
+        } else {
+          // 其他设备下，仍旧使用1倍的方案
+          dpr = 1;
+        }
+        scale = 1 / dpr;
+      }
+
+      docEl.setAttribute('data-dpr', dpr);
+      if (!metaEl) {
+        metaEl = doc.createElement('meta');
+        metaEl.setAttribute('name', 'viewport');
+        metaEl.setAttribute('content', 'initial-scale=' + scale + ', maximum-scale=' + scale + ', minimum-scale=' + scale + ', user-scalable=no');
+        if (docEl.firstElementChild) {
+          docEl.firstElementChild.appendChild(metaEl);
+        } else {
+          var wrap = doc.createElement('div');
+          wrap.appendChild(metaEl);
+          doc.write(wrap.innerHTML);
+        }
+      }
+
+      function refreshRem() {
+        var width = docEl.getBoundingClientRect().width;
+        if (width / dpr > 540) {
+          width = 540 * dpr;
+        }
+        var rem = width / 10;
+        docEl.style.fontSize = rem + 'px';
+        flexible.rem = win.rem = rem;
+      }
+
+      win.addEventListener('resize', function() {
+        clearTimeout(tid);
+        tid = setTimeout(refreshRem, 300);
+      }, false);
+      win.addEventListener('pageshow', function(e) {
+        if (e.persisted) {
+          clearTimeout(tid);
+          tid = setTimeout(refreshRem, 300);
+        }
+      }, false);
+
+      if (doc.readyState === 'complete') {
+        doc.body.style.fontSize = 12 * dpr + 'px';
+      } else {
+        doc.addEventListener('DOMContentLoaded', function(e) {
+          doc.body.style.fontSize = 12 * dpr + 'px';
+        }, false);
+      }
+
+
+      refreshRem();
+
+      flexible.dpr = win.dpr = dpr;
+      flexible.refreshRem = refreshRem;
+      flexible.rem2px = function(d) {
+        var val = parseFloat(d) * this.rem;
+        if (typeof d === 'string' && d.match(/rem$/)) {
+          val += 'px';
+        }
+        return val;
+      }
+      flexible.px2rem = function(d) {
+        var val = parseFloat(d) / this.rem;
+        if (typeof d === 'string' && d.match(/px$/)) {
+          val += 'rem';
+        }
+        return val;
+      }
+
+    })(window, window['lib'] || (window['lib'] = {}));
+  </script>
+  <style type="text/css">
+
+
+    .forget-pwd {
+      color: #f30;
+    }
+
+    .query-btn {
+      background: #01b76d;
+      border-radius: 0.13333rem;
+      margin: 0.8rem auto 0 auto;
+      width: 85%;
+      height: 1.17333rem;
+      text-align: center;
+      line-height: 1.17333rem;
+      font-size: 0.48rem;
+      color: #fff;
+    }
+  </style>
+  <style type="text/css">
+      .upload-box {
+        float: left;
+        margin-left: 25%;
+        margin-right: 0.53333rem;
+      }
+    .upload-img {
+      position: relative;
+      background: rgba(0, 0, 0, 0.3);
+      width: 2.13333rem;
+      height: 2.13333rem;
+      text-align: center;
+      color: #fff;
+    }
+
+    .upload-img span {
+      line-height: 2.13333rem;
+      font-size: 0.8rem;
+    }
+
+    .upload-img input {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      outline: none;
+      opacity: 0;
+      z-index: 1000;
+    }
+
+    .upload-img img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 10;
+    }
+  </style>
+  <style type="text/css">
+    .example-box {
+      background-size: cover;
+      background-position: center;
+      width: 2.13333rem;
+      height: 2.13333rem;
+      overflow: hidden;
+    }
+
+    .example-box .box-modal {
+      position: relative;
+    }
+
+    .example-box .def-txt {
+      position: relative;
+      background: rgba(0, 0, 0, 0.3);
+      z-index: 2;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      text-align: center;
+      line-height: 2.13333rem;
+      font-size: 0.4rem;
+      color: #fff;
+    }
+
+    .example-box .small-img {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      text-align: center;
+      line-height: 2.13333rem;
+      font-size: 0.4rem;
+      color: #fff;
+    }
+
+    .example-box .small-img img {
+      width: 100%;
+      height: 100%;
+    }
+
+    .example-box .all-img {
+      position: fixed;
+      width: 100%;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 30002;
+    }
+
+    .example-box .all-img img {
+      width: 100%;
+    }
+
+    .example-box .all-img img.middle-img {
+      transform: translateY(50%);
+    }
+
+    .btn {
+      background: #01b76d;
+      border-radius: 0.13333rem;
+      margin: 0.26667rem auto 0;
+      width: 90%;
+      height: 1.17333rem;
+      text-align: center;
+      line-height: 1.17333rem;
+      color: #fff;
+      font-size: 0.48rem;
+    }
+  </style>
+
+  <style type="text/css">
+    .modify-page-wrap {
+        background-color: #fff;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #f0f0f0;
+    }
+    .modify-wrap {
+      position: relative;
+      background: #fff;
+      width: 100%;
+      font-size: 0.12rem;
+      color: #666;
+      overflow: hidden;
+      line-height: 0.6rem;
+    }
+
+    .modify-wrap-input {
+        position: relative;
+        background: #fff;
+        font-size: 0.12rem;
+        color: #666;
+        overflow: hidden;
+        line-height: 1.6rem;
+        padding-left: .4rem;
+        color: #ccc;
+    }
+    .modify-wrap-input input {
+        width: 60%;
+        height: 1rem;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        padding-left: 10px;
+    }
+    .modify-wrap .modify-con {
+      padding-left: 0.53333rem;
+    }
+
+    .modify-wrap .modify-txt {
+      position: absolute;
+      top: 0;
+      right: 1.17333rem;
+    }
+
+    .modify-wrap .icon {
+      position: absolute;
+      top: 0;
+      right: 0.4rem;
+      font-size: 0.48rem;
+      font-weight: bold;
+      color: #666;
+      text-decoration: none;
+    }
+    .modify-wrap .modify-con {
+        padding: 0;
+        width: 100%;
+    }
+    .origin-pwd {
+        width: 100%;
+        font-size:
+    }
+    .span1{
+        float: left;
+        display: inline-block;
+        width: 40%;
+        text-align: right;
+        color: #999;
+    }
+    .span2 {
+        padding-left: 0.3rem;
+        display: block;
+        width: 57%;
+        float: right;
+    }
+    .imglist {
+        padding-top: .1rem;
+    }
+
+    .red {
+        color: #f30;
+    }
+    .text-tip {
+        background-color: #ffefd7;
+        padding: 0.5rem;
+    }
+
+    .txt-stress {
+        color: #f30;
+        font-size: 0.32158rem;
+        font-weight: bold;
+    }
+    .txt-def {
+        color: #999;
+    }
+    .img-f {
+        margin-right: 0.1rem;
+        vertical-align: middle;
+    }
+    .def-wrap {
+        padding: 0.4rem 0.8rem;
+    }
+    .imp-wrap {
+        background-color: #ebfff6;
+        color: #01b76d;
+        text-align: center;
+        width: 100%;
+        height: 1.5rem;
+        line-height: 1.5rem;
+        font-size: 0.4rem;
+    }
+    .imp-wrap-left {
+        box-sizing: border-box;
+        text-align: left;
+        padding-left: .6rem;
+    }
+
+    .example-test-img {
+        width: 5rem;
+        height: 5rem;
+        display: block;
+        margin: 0.5rem auto;
+    }
+    .no-fund-wrap {
+        text-align: center;
+        line-height: 1.0rem;
+    }
+    .no-fund {
+        color: #f30;
+        text-decoration: underline;
+    }
+    .light-con {
+        margin: .4rem 0;
+    }
+    .def-tip {
+        color: #999;
+        font-size: 0.34rem;
+        padding-left: 0.6rem;
+        line-height: 0.8rem;
+    }
+    .def-small-tip {
+        color: #999;
+        font-size: 0.1rem;
+        line-height: 0.8rem;
+        text-align: center;
+    }
+    .p-a {
+         color: #f30;
+         float: right;
+         margin-right: .6rem;
+         text-decoration: underline;
+    }
+    .def-radio {
+        display: inline-block;
+    }
+    .modal-button-cancel {
+        background: #f0f0f0;
+        color: #000;
+    }
+    .modal-button-ok {
+        color: #fff;
+    }
+  </style>
+</head>
+
+<body style="font-size: 12px;">
+  <div>
+    <div id="app" class="page-content">
+      <section class="banner"><img src="../img/apptopmstj.png" class="bar-img"></section>
+      <div class="logi-pwd-page page-content">
+        <section class="navigator second">
+            <span class="iconfont icon">&#xe701;</span>
+          <div class="title-wrap"><span class="title">第五步：提交评价</span> </div>
+        </section>
+        <div class="modify-page-wrap">
+            <div class="text-tip" style="padding-top:0.3rem;">
+                <p class="txt-stress" style="text-align:center;">任务倒计时：<span>16 :  40</span></p>
+                <p class="txt-stress" style="text-align:center;">本单为预售单，需收藏加购后 24 小时下单付款</p>
+            </div>
+            <div class="imp-wrap">目标宝贝</div>
+            <div class="modify-page-wrap">
+                <img class="example-test-img" src="../img/test1.png">
+            </div>
+
+            <div class="imp-wrap imp-wrap-left">提交好评1</div>
+            <div class="light-con">
+                <div class="upload-box">
+                  <div class="upload-img">
+                    <span class="iconfont">&#xe620;</span>
+                    <input type="file">
+                    <img style="display:none;">
+                  </div>
+                </div>
+                <div class="example-box">
+                  <div class="example-box">
+                    <div class="box-modal">
+                      <div class="small-img"><img src="../img/search_sample.png"></div>
+                      <div class="all-img" style="display:none;"><img src="../img/search_sample.png"></div>
+                      <div class="def-txt">示例图</div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+
+            <div class="imp-wrap imp-wrap-left">提交好评2</div>
+            <div class="light-con">
+                <div class="upload-box">
+                  <div class="upload-img">
+                    <span class="iconfont">&#xe620;</span>
+                    <input type="file">
+                    <img style="display:none;">
+                  </div>
+                </div>
+                <div class="example-box">
+                  <div class="example-box">
+                    <div class="box-modal">
+                      <div class="small-img"><img src="../img/search_sample.png"></div>
+                      <div class="all-img" style="display:none;"><img src="../img/search_sample.png"></div>
+                      <div class="def-txt">示例图</div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+
+            <div class="imp-wrap imp-wrap-left">提交好评3</div>
+            <div class="light-con">
+                <div class="upload-box">
+                  <div class="upload-img">
+                    <span class="iconfont">&#xe620;</span>
+                    <input type="file">
+                    <img style="display:none;">
+                  </div>
+                </div>
+                <div class="example-box">
+                  <div class="example-box">
+                    <div class="box-modal">
+                      <div class="small-img"><img src="../img/search_sample.png"></div>
+                      <div class="all-img" style="display:none;"><img src="../img/search_sample.png"></div>
+                      <div class="def-txt">示例图</div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+
+            <div class="imp-wrap imp-wrap-left">提交好评4</div>
+            <div class="light-con">
+                <div class="upload-box">
+                  <div class="upload-img">
+                    <span class="iconfont">&#xe620;</span>
+                    <input type="file">
+                    <img style="display:none;">
+                  </div>
+                </div>
+                <div class="example-box">
+                  <div class="example-box">
+                    <div class="box-modal">
+                      <div class="small-img"><img src="../img/search_sample.png"></div>
+                      <div class="all-img" style="display:none;"><img src="../img/search_sample.png"></div>
+                      <div class="def-txt">示例图</div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+
+
+            <div class="imp-wrap imp-wrap-left">提交好评5</div>
+            <div class="light-con">
+                <div class="upload-box">
+                  <div class="upload-img">
+                    <span class="iconfont">&#xe620;</span>
+                    <input type="file">
+                    <img style="display:none;">
+                  </div>
+                </div>
+                <div class="example-box">
+                  <div class="example-box">
+                    <div class="box-modal">
+                      <div class="small-img"><img src="../img/search_sample.png"></div>
+                      <div class="all-img" style="display:none;"><img src="../img/search_sample.png"></div>
+                      <div class="def-txt">示例图</div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+
+            <div class="imp-wrap imp-wrap-left">提交好评6</div>
+            <div class="light-con">
+                <div class="upload-box">
+                  <div class="upload-img">
+                    <span class="iconfont">&#xe620;</span>
+                    <input type="file">
+                    <img style="display:none;">
+                  </div>
+                </div>
+                <div class="example-box">
+                  <div class="example-box">
+                    <div class="box-modal">
+                      <div class="small-img"><img src="../img/search_sample.png"></div>
+                      <div class="all-img" style="display:none;"><img src="../img/search_sample.png"></div>
+                      <div class="def-txt">示例图</div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="query-btn">下一步</div>
+        </div>
+
+        <div transition="modal" class="modal-mask home-modal" style="display: none;">
+          <div class="modal-wrapper">
+            <div class="modal-container">
+              <p class="modal-header"></p>
+              <p class="modal-body"></p>
+              <div class="modal-footer border-none">
+                <button class="modal-default-button modal-button-ok border-none">
+                    Ok
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <section class="footer">
+          <a href="/home" class="item"><span class="text home iconfont">首页</span></a>
+          <a href="/task" class="item router-link-active"><span class="text task iconfont">任务</span></a>
+          <a href="/person" class="item"><span class="text my iconfont">我的</span></a></section>
+    </div>
+  </div>
+  <!-- built files will be auto injected -->
+
+
+</body>
+<script type="text/jscript" src="../js/exif.js"></script>
+<script type="text/jscript" src="../js/jpeg_encoder_basic.js"></script>
+<script type="text/jscript" src="../js/megapix-image.js"></script>
+<script type="text/jscript" src="../js/html5ImgCompress.js"></script>
+<script type="text/jscript" src="../js/lib/zepto.js"></script>
+<script>
+
+$('input[type="file"]').change(function() {
+    var self = $(this);
+    new html5ImgCompress(event.target.files[0], {
+      done (file, base64) {
+          var $img = self.parent().find('img');
+          $img.attr('src', base64);
+          $img.css('display' , 'block');
+      }
+    });
+});
+
+$('.def-txt').bind('click', function() {
+    var self = $(this);
+    var parent = self.parent();
+    var bigImg = parent.find('.all-img');
+    bigImg.css('display','block');
+    $('.modal-mask').css('display','block');
+});
+
+$('.all-img').bind('click', function() {
+    var self = $(this);
+    self.css('display', 'none');
+    $('.modal-mask').css('display','none');
+})
+</script>
+
+</html>
