@@ -1,0 +1,50 @@
+
+.pl-35{padding-left: 35px !important;}
+
+.main{margin-top: 15px;border: 1px solid #ececed;background-color: #fdfefe;margin-bottom: 16px;}
+
+.task-ti{padding: 15px 6px 4px 6px;margin: 0 15px;margin-bottom: 23px;border-bottom: 3px solid #dee1e2;}
+.task-ti .tt{font-size: 16px;color: #090909;font-weight: 800;}
+.task-ti .vbar{padding-right: 12px;margin-right: 12px;border-right: 1px solid #e6eded;}
+
+.buyer-info{margin: 0 15px;}
+.buyer-info > p{padding-left: 8px;color: #767575;font-size: 15px;font-weight: 600;}
+.buyer-info table{width: 974px;background-color: #fff;margin-top: 12px;margin-bottom: 30px;}
+.buyer-info th{background-color: #fafbfb;padding: 14px 0px;text-align: center;}
+.buyer-info td{padding: 28px 0px;text-align: center;}
+
+.buyer-remark{margin: 0 15px;}
+.buyer-remark > label {padding-left: 8px;color: #767575;font-size: 15px;font-weight: 600;}
+.buyer-remark > textarea{width:969px;margin-top:12px;margin-bottom:30px;height:80px;border:1px solid #e5e5e5;color:#b7b2b2;}
+
+.task-pro{margin: 0 15px;}
+.task-pro .subtt{padding-left: 8px;color: #767575;font-size: 15px;font-weight: 600;}
+.task-pro > table{margin-top: 15px;width: 974px;background-color: #fff;margin-bottom: 50px;}
+.task-pro > table th{background-color: #fafbfb;padding: 14px 0px;}
+.task-pro > table td{padding: 12px 0px;}
+.task-pro .pro_img{margin-right: 13px;cursor: pointer;}
+.task-pro .ok{position: relative;top: 4px;left: 16px;}
+.task-pro .upic-wrap{margin-bottom: 13px;}
+.task-pro .fk li.mb12{margin-bottom: 12px;}
+.task-pro .hurryevaluate{display: inline-block;width: 52px;text-align: center;background-color: #ed6977;color: #fff;padding: 4px 0;border-radius: 6px;}
+
+.bigimg-see{position: fixed;top: 0;left: 0;z-index: 1010;overflow: auto;opacity: 1.0;filter: alpha(opacity=100);display: none;}
+.bigimg-see .close{position: fixed;top: 20px;right: 20px;cursor: pointer;}
+
+/*ç¡®è®¤ç”³è¯‰å¯¹è¯*/
+#sureappeal{width: 520px;height: 210px;background-color: #f9f7f7;border-radius: 4px;display: none;}
+#sureappeal .tipswords{padding: 1em;padding-top: 3em;line-height: 1.6em;font-size: 16px;font-weight: normal;color: red;letter-spacing: 0.1em;}
+#sureappeal .btn{position: absolute;bottom: 1.0em;font-weight: bold;}
+#sureappeal .stillappeal{left: 2.0em;}
+#sureappeal .close{right: 2.0em;}
+
+.express-info{margin: 0 15px;}
+.express-info .subtt{padding-left: 8px;color: #767575;font-size: 15px;font-weight: 600;}
+.express-info table{width: 100%;margin-top: 12px;margin-bottom: 12px;}
+.express-info th{text-align: center;background-color: #fafbfb;border: 1px solid #e5e5e5;padding: 14px 0px;}
+.express-info td{padding: 14px 0px;}
+.express-info .fir{padding-left: 8px;}
+.express-info .rebuyexpress{margin-bottom: 10px;}
+
+#rebuy{display: inline-block;background-color: #ed6977;padding: 4px 6px;color: #fff;border-radius: 4px;}
+
